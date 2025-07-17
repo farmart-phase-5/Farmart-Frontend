@@ -31,3 +31,18 @@ const AdminAuth = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     if (!validateInputs()) return;
+
+     setLoading(true);
+    setError('');
+    setSuccess('');
+
+    const endpoint = isRegister
+      ? 'https://brom-e-commerce-backend.onrender.com/api/auth/admin/register'
+      : 'https://brom-e-commerce-backend.onrender.com/api/auth/admin/login';
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
