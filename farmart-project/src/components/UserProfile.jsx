@@ -56,3 +56,120 @@ const UserProfile = () => {
     setError('');
     setSuccess('');
   };
+
+    const handleUpdateProfile = async () => {
+    setError('');
+    setSuccess('');
+
+    try {
+      const res = await fetch(
+        'https://brom-e-commerce-backend.onrender.com/api/users/me',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data?.error || 'Profile update failed');
+        return;
+      }
+
+      setSuccess('Profile updated successfully!');
+    } catch (err) {
+      console.error(err);
+      setError('Something went wrong during profile update.');
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    setError('');
+    setSuccess('');
+
+    const { current_password, new_password } = formData;
+
+    if (!current_password || !new_password) {
+      setError('Both current and new password are required');
+      return;
+    }
+
+    if (new_password.length < 8) {
+      setError('New password must be at least 8 characters long');
+      return;
+    }
+
+    if (current_password === new_password) {
+      setError('New password must be different from the current one');
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        'https://brom-e-commerce-backend.onrender.com/api/users/me/password',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ current_password, new_password }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data?.error || 'Password update failed');
+        return;
+      }
+
+      setSuccess('Password updated successfully!');
+      setFormData((prev) => ({
+        ...prev,
+        current_password: '',
+        new_password: '',
+      }));
+    } catch (err) {
+      console.error(err);
+      setError('Something went wrong while updating password.');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete your account?')) return;
+
+    try {
+      const res = await fetch(
+        'https://brom-e-commerce-backend.onrender.com/api/users/me',
+        {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data?.error || 'Delete failed');
+        return;
+      }
+
+      localStorage.clear();
+      alert('Account deleted. Redirecting...');
+      window.location.href = '/';
+    } catch (err) {
+      console.error(err);
+      setError('Something went wrong.');
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
