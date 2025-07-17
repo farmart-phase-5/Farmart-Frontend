@@ -40,3 +40,13 @@ const Logout = () => {
       alert('An error occurred during logout.');
     }
   };
+    
+    return (
+    <button className="logout-button" onClick={handleLogout}>
+      <span role="img" aria-label="logout" style={{ marginRight: '8px' }}>🚪</span>
+      Logout
+    </button>
+  );
+};
+
+export default Logout;
