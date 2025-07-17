@@ -44,7 +44,7 @@ const Contact = () => {
           <FontAwesomeIcon icon={faEnvelope} />
             <div className='inneremail'>
               <h3>Email</h3>
-              <p>tastetown@mall.co.ke</p>
+              <p>farmart@gmail.co.ke</p>
 
             </div>
           </div>

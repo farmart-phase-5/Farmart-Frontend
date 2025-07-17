@@ -7,16 +7,15 @@ const Home = () => {
       <LoadPageimg />
 
       <section className="home-content">
-        <h1>Welcome to Taste Town</h1>
+        <h1>Welcome to Farmart</h1>
         <p>
-          Taste Town is your one-stop solution for high-quality groceries delivered straight to your door. We
-          believe in fresh, local produce and a joyful customer experience.
+          Your trusted marketplace for healthy, high-quality farm animals — delivered straight from the farm to your doorstep. Whether you're a seasoned farmer, a first-time buyer, or a livestock trader, Farmart connects you directly with reliable farmers and unbeatable deals. No middlemen, no hidden costs — just honest trade, healthy animals, and a community you can count on.
+          Start exploring today and experience the smarter way to buy and sell livestock!
         </p>
 
         <p>
-          From farm to table, our mission is to simplify your grocery shopping through innovation, convenience,
-          and care. Whether you're looking for farm-fresh fruits, vegetables, dairy, or pantry essentials — we
-          have you covered.
+          At Farmart, our mission is to transform the livestock market by empowering farmers, connecting communities, and delivering quality farm animals through a transparent and trustworthy platform. 
+          We aim to create a fair and accessible space where buyers and sellers can thrive — built on integrity, affordability, and genuine care for animals and people alike.
         </p>
       </section>
     </div>
