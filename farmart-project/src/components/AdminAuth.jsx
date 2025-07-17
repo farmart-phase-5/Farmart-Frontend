@@ -9,4 +9,25 @@ const AdminAuth = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  
+   const toggleMode = () => {
+    setIsRegister(prev => !prev);
+    setError('');
+    setSuccess('');
+  };
+
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validateInputs = () => {
+    const { username, email, password } = formData;
+    if (!username || !password || (isRegister && !email)) {
+      setError('All fields are required');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (!validateInputs()) return;
