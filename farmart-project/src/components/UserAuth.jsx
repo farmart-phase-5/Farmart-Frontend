@@ -84,3 +84,45 @@ const UserAuth = () => {
       alert('An error occurred.');
     }
   };
+
+    return (
+    <div className="user-auth">
+      <h2>{isLogin ? 'User Login' : 'User Registration'}</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        {!isLogin && (
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        )}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
+      </form>
+
+      <p onClick={toggleForm}>
+        {isLogin ? "Don't have an account? Register" : 'Already have an account? Login'}
+      </p>
+    </div>
+  );
+};
+
+export default UserAuth;
