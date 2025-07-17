@@ -2,47 +2,47 @@ import React from 'react';
 import cows from '../assets/cows.jpeg';
 import goats from '../assets/goats.jpeg';
 import sheeps from '../assets/sheeps.jpeg';
-import chickens from '../assets/chickens.jpeg';
+
 
 const About = () => {
   return (
     <div className='about-container'>
       <h1>What we do?</h1>
       <p>
-        At Taste Town, we've created an environment that thrives on teamwork, where associates can innovate, grow, and have successful careers. Most of our leaders have come up through our ranks. Because of our team's extraordinary efforts, we are a leading innovator in the e‑commerce and grocery industries.
+        At Farmart, we make it easy for you to buy and sell healthy, well-cared-for farm animals directly from trusted farmers and breeders. By removing middlemen, we ensure fair prices, transparent dealings, and peace of mind for both sellers and buyers. Whether you're looking for livestock to grow your farm or start a new venture, Farmart connects you to a community built on trust, quality, and genuine value. Real farmers. Real animals. Real deals.
       </p>
 
       <h1>Our Promise</h1>
       <p>
-        Taste Town is driven by innovation: We deliver the highest quality, freshest food. We create food experiences. We drive simple, healthy solutions that make every day better. You deserve a life that is joyful and delicious, which is why our team and the partners we work with are committed to delivering only the very best to you.
+        Healthy, Well-Cared-For Animals - We work only with farmers who prioritize animal health, proper feeding, and humane care.
+
+        Fair & Transparent Pricing - No hidden fees or inflated costs — just honest deals that benefit both farmers and buyers.
+
+        Trusted Connections - Every seller on Farmart is verified, so you can buy with confidence and build long-term relationships.
+
+        Hassle-Free Transactions - From listing to delivery, we make the buying and selling process smooth, secure, and stress-free.
+
+        Support for Local Farmers - Every purchase helps hardworking farmers grow their businesses and improve their livelihoods.
       </p>
 
-      <h1>Quality Backed by The Experts</h1>
+      <h1>Quality of Our Livestock</h1>
       <img src={cows} alt="Cows" className='imageone' />
       <p>
-        We want you to know what's really great (and what's not). That's why we have a rating system to guide you to the best fruit, vegetables, and seafood. Our experts taste over 800 fresh products daily and rate them so you always know what’s great right now. That's because we're committed to making sure your order is perfect and you're completely satisfied. So if something you receive is ever not up to your standards, let us know and we'll make it right—that's our 100% Happiness Guarantee.
+        At Farmart, quality is at the heart of everything we offer. Our livestock comes from experienced, responsible farmers who prioritize animal health, proper nutrition, and ethical rearing practices. Each animal is carefully inspected for good health, strong build, and suitability for breeding, dairy, or meat production. We ensure that the animals listed on Farmart are disease-free, well-fed, and raised in clean, stress-free environments. When you buy from us, you're choosing livestock you can trust — strong, healthy, and ready to thrive on your farm.
       </p>
 
-      <h1>Taste Town Business</h1>
+      <h1>Farmart Business Establishment</h1>
       <img src={goats} alt="Goats" className='imagetwo' />
       <p>
-        Since 2006, Taste Town has helped businesses fuel happy workdays. We offer a one-stop shop for stocking the workplace pantry, filling up on snacks and supplies, and ordering catering and beverages for meetings and gatherings. And with our dedicated corporate concierge team, we're always here to help you delight your team.
+        Farmart was born out of a simple idea — to bring fairness, transparency, and trust back into the livestock market. Founded by a team passionate about agriculture and community, we saw the challenges farmers faced when dealing with middlemen and unfair pricing. So we created a platform that puts control back in the hands of farmers and gives buyers direct access to quality livestock. What started as a small network has grown into a trusted marketplace where relationships are built, not just deals. Farmart is more than a business — it's a movement to uplift farmers and deliver genuine value to customers.
       </p>
 
       <div className='about-highlight'>
         <div>
           <img src={sheeps} alt="Sheep" />
-          <h1>Save With Fresh Deals</h1>
+          <h1>Special Offers</h1>
           <p>
-            Look for new Fresh Deals every Thursday to save on our favorite peak-season picks and recommendations. Not many grocers put their best food on sale, but we do. Because when something is great, we want everyone to try it.
-          </p>
-        </div>
-
-        <div>
-          <img src={chickens} alt="Chickens" />
-          <h1>Try DeliveryPass For Free</h1>
-          <p>
-            A DeliveryPass subscription gives you unlimited free grocery delivery, plus the ability to reserve a timeslot. Start with a free trial and you'll get 60 days of free delivery. After that, the cost pays for itself if you order more than once a month.
+            At Farmart, we go the extra mile — literally. We offer free deliveries on select orders, making it easier and more affordable for you to get quality livestock right to your doorstep or farm. Plus, we regularly roll out exclusive sales and discounts, giving you more value for your money without compromising on the health or quality of the animals. Whether you're buying one goat or a herd of cattle, Farmart ensures every deal is a win-win. Great animals, great prices — delivered with care, at no extra cost.
           </p>
         </div>
       </div>
