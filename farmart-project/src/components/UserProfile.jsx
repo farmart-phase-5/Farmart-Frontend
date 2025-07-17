@@ -173,3 +173,71 @@ const UserProfile = () => {
   };
 
   if (loading) return <p>Loading...</p>;
+
+    return (
+    <div className="profile-page">
+      <h2>User Profile</h2>
+
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
+
+      <label>
+        Username:
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label>
+        Email:
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </label>
+
+      <button onClick={handleUpdateProfile} className="update-button">
+        Update Profile
+      </button>
+
+      <h3>Change Password</h3>
+
+      <label>
+        Current Password:
+        <input
+          type="password"
+          name="current_password"
+          value={formData.current_password}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label>
+        New Password:
+        <input
+          type="password"
+          name="new_password"
+          value={formData.new_password}
+          onChange={handleChange}
+        />
+      </label>
+
+      <button onClick={handleUpdatePassword} className="password-button">
+        Update Password
+      </button>
+
+      <hr />
+
+      <button onClick={handleDelete} className="delete-button">
+        Delete Account
+      </button>
+    </div>
+  );
+};
+
+export default UserProfile;
