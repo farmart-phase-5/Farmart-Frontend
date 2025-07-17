@@ -16,3 +16,25 @@ const DeleteProducts = ({ products, setproducts, setEditingProduct }) => {
 
     try {
       setDeletingId(id);
+
+        const res = await fetch(`https://brom-e-commerce-backend.onrender.com/api/food/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to delete from server');
+      }
+
+      const filtered = products.filter(product => String(product.id) !== String(id));
+      setproducts(filtered);
+    } catch (err) {
+      console.error('Error deleting product:', err);
+      alert('Delete failed: ' + err.message);
+    } finally {
+      setDeletingId(null);
+    }
+  }
