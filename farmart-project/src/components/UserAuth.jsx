@@ -38,3 +38,49 @@ const UserAuth = () => {
       return null;
     }
   };
+
+     const handleSubmit = async (e) => {
+    e.preventDefault();
+    const endpoint = isLogin ? 'login' : 'register';
+    const url = `https://brom-e-commerce-backend.onrender.com/api/auth/user/${endpoint}`;
+
+    const payload = isLogin
+      ? { username: formData.username, password: formData.password }
+      : formData;
+
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data?.error || 'Authentication failed.');
+        return;
+      }
+
+      if (isLogin) {
+        localStorage.setItem('userToken', data.access_token);
+        localStorage.setItem('refreshToken', data.refresh_token);
+        localStorage.setItem('userRole', 'user');
+        alert('Login successful!');
+
+        
+        const freshAccessToken = await refreshAccessToken();
+        if (freshAccessToken) {
+          console.log('Access token refreshed successfully');
+        }
+
+        window.location.href = '/menu'; 
+      } else {
+        alert('Registration successful! You can now log in.');
+        setIsLogin(true);
+      }
+    } catch (err) {
+      console.error('Auth error:', err);
+      alert('An error occurred.');
+    }
+  };
