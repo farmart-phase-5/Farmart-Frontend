@@ -38,3 +38,50 @@ const DeleteProducts = ({ products, setproducts, setEditingProduct }) => {
       setDeletingId(null);
     }
   }
+
+    return (
+    <div className="admin-panel">
+      <h2 className="admin-title">Manage Products</h2>
+      {products.length === 0 ? (
+        <p className="no-products">No products available.</p>
+      ) : (
+        <table className="product-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th colSpan="2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map(product => (
+              <tr key={product.id}>
+                <td>{product.id}</td>
+                <td>{product.name}</td>
+                <td>
+                  <button
+                    className="edit-button"
+                    onClick={() => setEditingProduct(product)}
+                  >
+                    ✏️ Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(product.id)}
+                    disabled={deletingId === product.id}
+                  >
+                    {deletingId === product.id ? 'Deleting...' : '🗑️ Delete'}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default DeleteProducts;
