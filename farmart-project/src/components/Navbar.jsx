@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBagShopping, faUserGear, faUserCircle  } from '@fortawesome/free-solid-svg-icons';
+import cows from '../assets/cows.jpeg';
+
 
 const NavBar = () => {
   const navigate = useNavigate();
