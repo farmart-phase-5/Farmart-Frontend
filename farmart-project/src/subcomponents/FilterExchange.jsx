@@ -55,3 +55,58 @@ const FilterExchange = ({ products }) => {
         : [...prev, category]
     );
   };
+
+    const placeOrder = async () => {
+    const token = localStorage.getItem('userToken') || localStorage.getItem('adminToken');
+    if (!token) {
+      alert("You must be logged in to place an order.");
+      return;
+    }
+
+    try {
+      
+      const orderRes = await fetch('https://brom-e-commerce-backend.onrender.com/api/orders', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const newOrder = await orderRes.json();
+      if (!orderRes.ok) throw new Error(newOrder.error || 'Failed to create order');
+
+      
+      for (const item of cartItems) {
+        const res = await fetch(`https://brom-e-commerce-backend.onrender.com/api/orders/${newOrder.id}/items`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            food_item_id: item.id,
+            quantity: item.quantity
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to add item');
+      }
+
+      alert("Order placed successfully!");
+      setcartItems([]); 
+      setshowCart(false); 
+
+    } catch (err) {
+      console.error("Order failed:", err);
+      alert("Order failed: " + err.message);
+    }
+  };
+
+  const categories = [...new Set(products.map(p => p.category))];
+
+  const filteredProducts = selectedCategories.length === 0
+    ? products
+    : products.filter(product =>
+        selectedCategories.includes(product.category)
+      );
