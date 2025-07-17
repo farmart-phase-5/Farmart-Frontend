@@ -20,3 +20,23 @@ const Logout = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
+
+        const isJson = res.headers.get('content-type')?.includes('application/json');
+      const data = isJson ? await res.json() : null;
+
+      console.log("Logout response:", data);
+
+      if (!res.ok) {
+        console.error('Logout failed response:', data);
+        alert(data?.error || 'Logout failed.');
+        return;
+      }
+
+      localStorage.removeItem('adminToken');
+      alert('Admin logout successful.');
+      navigate('/admin-auth');
+    } catch (err) {
+      console.error('Logout error:', err);
+      alert('An error occurred during logout.');
+    }
+  };
