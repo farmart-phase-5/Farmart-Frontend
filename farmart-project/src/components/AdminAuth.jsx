@@ -70,3 +70,52 @@ const AdminAuth = () => {
       setError('Failed to connect to server');
     }
   }; 
+
+    return (
+    <div className="admin-auth">
+      <h2>{isRegister ? 'Admin Register' : 'Admin Login'}</h2>
+
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+        {isRegister && (
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        )}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        {error && <p className="auth-error" style={{ color: 'red' }}>{error}</p>}
+        {success && <p className="auth-success" style={{ color: 'green' }}>{success}</p>}
+
+        <button type="submit" className="auth-button" disabled={loading}>
+          {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
+        </button>
+      </form>
+
+      <p className="auth-toggle">
+        {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
+        <button className="auth-switch" onClick={toggleMode}>
+          {isRegister ? 'Login' : 'Register'}
+        </button>
+      </p>
+    </div>
+  );
+};
+
+export default AdminAuth;
