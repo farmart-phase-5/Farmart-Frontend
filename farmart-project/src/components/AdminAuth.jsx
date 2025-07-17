@@ -46,3 +46,27 @@ const AdminAuth = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
+
+     const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong');
+        return;
+      }
+
+      if (!isRegister) {
+        localStorage.setItem('adminToken', data.access_token);
+        localStorage.setItem('userRole', 'admin');
+        setSuccess('Login successful! Redirecting...');
+        setTimeout(() => navigate('/Admin'), 1500);
+      } else {
+        setSuccess('Registration successful! You can now log in.');
+        setIsRegister(false);
+        setFormData({ username: '', email: '', password: '' });
+      }
+    } catch (err) {
+      setLoading(false);
+      setError('Failed to connect to server');
+    }
+  }; 
