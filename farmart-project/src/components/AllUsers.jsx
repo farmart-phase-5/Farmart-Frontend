@@ -30,4 +30,38 @@ const AllUsers = () => {
     fetchUsers();
   }, [token]);
 
-    
+     return (
+    <div className="user-table">
+      <h2>All Users</h2>
+      {error && <p className="error-message">{error}</p>}
+      {!error && (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length > 0 ? (
+              users.map(user => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">No users found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default AllUsers;
