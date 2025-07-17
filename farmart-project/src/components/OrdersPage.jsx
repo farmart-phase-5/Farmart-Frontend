@@ -27,3 +27,42 @@ const OrdersPage = () => {
 
     fetchOrders();
   }, []);
+
+    return (
+    <div className="orders-page-container">
+      <div className="orders-page-wrapper">
+        <h2 className="orders-heading">Your Orders</h2>
+
+        {loading ? (
+          <p className="orders-loading">Loading orders...</p>
+        ) : orders.length === 0 ? (
+          <div className="orders-empty">
+            <p>No orders found.</p>
+          </div>
+        ) : (
+          <div className="orders-list">
+            {orders.map(order => (
+              <div key={order.id} className="order-card">
+                <h3 className="order-title">Order {order.id}</h3>
+                {order.items?.length > 0 ? (
+                  <ul className="order-items">
+                    {order.items.map(item => (
+                      <li key={item.id} className="order-item">
+                        <span>{item.food_item?.name || 'Unknown Item'}</span>
+                        <span className="order-qty">× {item.quantity}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="order-empty">No items in this order.</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default OrdersPage;
