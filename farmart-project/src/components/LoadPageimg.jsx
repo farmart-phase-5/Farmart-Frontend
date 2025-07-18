@@ -1,5 +1,5 @@
 import React from 'react'
-import tasteImg from "../assets/cows.jpeg"
+import tasteImg from "../assets/Farmart.png"
 import LoadPage from '../components/LoadPage'
 
 const Loadpageimg = () => {

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/Farmart.png';
+import logo from '../assets/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserGear, faBagShopping, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const NavBar = () => {
@@ -15,21 +18,15 @@ const NavBar = () => {
   return (
     <div className='navbar'>
       <img src={logo} alt="Taste Town Logo" />
-      <nav className='nav-links'>
-        <Link to="/">Home</Link>
-        <Link to="/Menu">Menu</Link>
-        <Link to="/About">About us</Link>
-        <Link to="/Contact">Contact</Link>
-      </nav>
       <div className='sidebtn'>
         <button className='userbtn' onClick={() => navigate('/Admin')}>
-          {/* <FontAwesomeIcon icon={faUserGear} /> */}
+          <FontAwesomeIcon icon={faUserGear} />
         </button>
         <button className='shopbag' onClick={() => navigate('/orders')}>
-          {/* <FontAwesomeIcon icon={faBagShopping} /> */}
+          <FontAwesomeIcon icon={faBagShopping} />
         </button>
         <button className='profilebtn' onClick={() => navigate(isAuthenticated ? '/profile' : '/user-auth')}>
-          {/* <FontAwesomeIcon icon={faUserCircle} /> */}
+          <FontAwesomeIcon icon={faUserCircle} />
         </button>
         {isAuthenticated ? (
           <button className='signbtn' onClick={handleLogout}>Logout</button>
@@ -37,6 +34,12 @@ const NavBar = () => {
           <button className='signbtn' onClick={() => navigate('/user-auth')}>Sign Up</button>
         )}
       </div>
+      <nav className='nav-links'>
+        <Link to="/">Home</Link>
+        <Link to="/Menu">Menu</Link>
+        <Link to="/About">About us</Link>
+        <Link to="/Contact">Contact</Link>
+      </nav>
     </div>
   );
 };
