@@ -1,6 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faFilter,faCartShopping} from '@fortawesome/free-solid-svg-icons'
 
 const FilterOption = ({toggleSidebar,toggleCart,cartItemCount }) => {
   return (

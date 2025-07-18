@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import cows from '../assets/cows.jpeg';
+import logo from '../assets/logo.jpeg';
 
 
 const NavBar = () => {
@@ -23,13 +23,13 @@ const NavBar = () => {
       </nav>
       <div className='sidebtn'>
         <button className='userbtn' onClick={() => navigate('/Admin')}>
-          <FontAwesomeIcon icon={faUserGear} />
+          {/* <FontAwesomeIcon icon={faUserGear} /> */}
         </button>
         <button className='shopbag' onClick={() => navigate('/orders')}>
-          <FontAwesomeIcon icon={faBagShopping} />
+          {/* <FontAwesomeIcon icon={faBagShopping} /> */}
         </button>
         <button className='profilebtn' onClick={() => navigate(isAuthenticated ? '/profile' : '/user-auth')}>
-          <FontAwesomeIcon icon={faUserCircle} />
+          {/* <FontAwesomeIcon icon={faUserCircle} /> */}
         </button>
         {isAuthenticated ? (
           <button className='signbtn' onClick={handleLogout}>Logout</button>
