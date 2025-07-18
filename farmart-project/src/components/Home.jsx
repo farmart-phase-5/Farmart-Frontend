@@ -13,6 +13,7 @@ const Home = () => {
           Start exploring today and experience the smarter way to buy and sell livestock!
         </p>
 
+
         <p>
           At Farmart, our mission is to transform the livestock market by empowering farmers, connecting communities, and delivering quality farm animals through a transparent and trustworthy platform. 
           We aim to create a fair and accessible space where buyers and sellers can thrive — built on integrity, affordability, and genuine care for animals and people alike.
