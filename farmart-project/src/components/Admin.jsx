@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import AddProducts from './AddProducts'
-import DeleteProducts from './DeleteProducts'
-import EditProduct from './EditProduct'
-import Logout from './Logout'
-import AllUsers from './AllUsers'
+import AddProducts from '../components/AddProducts'
+import DeleteProducts from '../components/DeleteProducts'
+import EditProduct from '../components/EditProducts'
+import Logout from '../components/Logout'
+import AllUsers from '../components/AllUsers'
 
 const Admin = ({ products, setproducts }) => {
   const [editingProduct, setEditingProduct] = useState(null); 

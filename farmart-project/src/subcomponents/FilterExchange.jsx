@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Productcard from './Productcard';
-import FilterOption from './FilterOption';
+import Productcard from '../subcomponents/Productcard';
+import FilterOption from '../subcomponents/FilterOption';
 
 const FilterExchange = ({ products }) => {
   const [showSidebar, setShowSidebar] = useState(false);
