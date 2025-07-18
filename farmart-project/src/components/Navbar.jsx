@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/Farmart.png';
 
 
 const NavBar = () => {
