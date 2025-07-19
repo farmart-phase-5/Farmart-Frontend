@@ -384,9 +384,8 @@ section p {
 }
 
 .offer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: left;
+  flex: 1;
 }
 
 .offer-content h2 {
@@ -458,4 +457,70 @@ section p {
   .about-highlight h1 {
     font-size: 1.5rem;
   }
+}
+
+
+.admin-auth {
+  min-height: 100vh; /* Full screen height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical centering */
+  align-items: center;     /* Horizontal centering */
+  background-color: #f4f7f9;
+  padding: 2rem;
+}
+
+.auth-form {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-form input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.auth-button {
+  background-color: #1abc9c;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #16a085;
+}
+
+.auth-toggle {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.auth-switch {
+  background: none;
+  border: none;
+  color: #1abc9c;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 1rem;
+  margin-left: 5px;
+}
+
+.auth-switch:hover {
+  color: #16a085;
 }
