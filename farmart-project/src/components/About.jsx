@@ -37,15 +37,43 @@ const About = () => {
         Farmart was born out of a simple idea — to bring fairness, transparency, and trust back into the livestock market. Founded by a team passionate about agriculture and community, we saw the challenges farmers faced when dealing with middlemen and unfair pricing. So we created a platform that puts control back in the hands of farmers and gives buyers direct access to quality livestock. What started as a small network has grown into a trusted marketplace where relationships are built, not just deals. Farmart is more than a business — it's a movement to uplift farmers and deliver genuine value to customers.
       </p>
 
-      <div className='about-highlight'>
-        <div>
-          <img src={sheeps} alt="Sheep" />
-          <h1>Special Offers</h1>
-          <p>
-            At Farmart, we go the extra mile — literally. We offer free deliveries on select orders, making it easier and more affordable for you to get quality livestock right to your doorstep or farm. Plus, we regularly roll out exclusive sales and discounts, giving you more value for your money without compromising on the health or quality of the animals. Whether you're buying one goat or a herd of cattle, Farmart ensures every deal is a win-win. Great animals, great prices — delivered with care, at no extra cost.
-          </p>
-        </div>
+     <div className='about-highlight'>
+  <h1>Special Offers</h1>
+  <div className='offer-grid'>
+    <div className='offer-card horizontal'>
+      <img src={sheeps} alt="Free Delivery" />
+      <div className="offer-content">
+        <h2>Free Deliveries</h2>
+        <p>
+          We offer <strong>free delivery</strong> on select livestock orders — bringing trusted animals right to your farm with no extra cost.
+        </p>
       </div>
+    </div>
+
+    <div className='offer-card horizontal'>
+      <img src={goats} alt="Exclusive Discounts" />
+      <div className="offer-content">
+        <h2>Exclusive Discounts</h2>
+        <p>
+          Enjoy <strong>seasonal sales</strong> and bulk order discounts, ensuring you get top-quality livestock at unbeatable prices.
+        </p>
+      </div>
+    </div>
+
+    <div className='offer-card horizontal'>
+      <img src={cows} alt="Buyer Protection" />
+      <div className="offer-content">
+        <h2>Buyer Protection</h2>
+        <p>
+          Every transaction on Farmart is <strong>secure and verified</strong>, giving you peace of mind from purchase to delivery.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
     </div>
   );
 };
