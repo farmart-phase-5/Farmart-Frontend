@@ -1,4 +1,3 @@
-/* ========== RESET & BASE ========== */
 * {
   margin: 0;
   padding: 0;
@@ -24,7 +23,7 @@ img {
 }
 
 
-/* ========== LAYOUT ========== */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -32,7 +31,7 @@ img {
 }
 
 
-/* ========== NAVBAR WITH LOGO LEFT & BUTTONS/LINKS RIGHT ========== */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -58,7 +57,7 @@ img {
 }
 
 
-/* ========== SIDEBTN BUTTONS ========== */
+
 .sidebtn {
   display: flex;
   gap: 1rem;
@@ -90,7 +89,7 @@ img {
 }
 
 
-/* ========== NAV LINKS NEXT TO BUTTONS ========== */
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -107,7 +106,7 @@ img {
 }
 
 
-/* ========== BUTTON STYLES (GLOBAL) ========== */
+
 button,
 .btn {
   background-color: #1abc9c;
@@ -126,7 +125,7 @@ button:hover,
 }
 
 
-/* ========== FORMS ========== */
+
 form {
   display: flex;
   flex-direction: column;
@@ -150,7 +149,7 @@ select:focus {
 }
 
 
-/* ========== CARDS ========== */
+
 .card {
   background: white;
   padding: 1.5rem;
@@ -160,7 +159,7 @@ select:focus {
 }
 
 
-/* ========== FOOTER ========== */
+
 footer {
   text-align: center;
   padding: 1.5rem;
@@ -170,7 +169,7 @@ footer {
 }
 
 
-/* ========== HOME PAGE IMAGE WRAPPER ========== */
+
 .loadpage-image-wrapper {
   width: 100%;
   max-width: 1000px;
@@ -188,7 +187,6 @@ footer {
 }
 
 
-/* ========== HOME PAGE CONTENT ========== */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -217,7 +215,7 @@ footer {
 }
 
 
-/* ========== SECTION BLOCKS ========== */
+
 section {
   background-color: #ffffff;
   margin: 1.5rem 0;
@@ -245,7 +243,7 @@ section p {
 }
 
 
-/* ========== HORIZONTAL SECTION ROW ========== */
+
 .section-row {
   display: flex;
   justify-content: space-between;
@@ -261,7 +259,7 @@ section p {
 }
 
 
-/* ========== UTILITY CLASSES ========== */
+
 .text-center {
   text-align: center;
 }
@@ -275,7 +273,7 @@ section p {
 }
 
 
-/* ========== RESPONSIVE DESIGN ========== */
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -311,3 +309,24 @@ section p {
     flex: 1 1 100%;
   }
 }
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.row section {
+  flex: 1 1 calc(25% - 1.5rem); 
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  text-align: left;
+}
+

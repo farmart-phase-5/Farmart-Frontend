@@ -22,7 +22,8 @@ const Home = () => {
         <h1>Section heading</h1>
       </section>
 
-      <section>
+      <div className='row'>
+        <section>
         <h3>For Livestock Listings</h3>
         <h4>"Available Livestock"</h4>
         <p>Explore healthy, farm-raised animals ready for your farm.</p>
@@ -45,6 +46,8 @@ const Home = () => {
         <h4>"Meet Our Farmers"</h4>
         <p>Get to know the people behind the livestock.</p>
       </section>
+      </div>
+
     </div>
   );
 };
