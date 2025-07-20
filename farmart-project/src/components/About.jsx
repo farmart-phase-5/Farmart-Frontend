@@ -2,6 +2,7 @@ import React from 'react';
 import cows from '../assets/cows.jpeg';
 import goats from '../assets/goats.jpeg';
 import sheeps from '../assets/sheeps.jpeg';
+import Footer from '../components/Footer';
 
 
 const About = () => {
@@ -72,7 +73,7 @@ const About = () => {
   </div>
 </div>
 
-
+<Footer />
 
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import LoadPageimg from './LoadPageimg';
+import Footer from '../components/Footer'
 
 const Home = () => {
   return (
@@ -47,7 +48,7 @@ const Home = () => {
         <p>Get to know the people behind the livestock.</p>
       </section>
       </div>
-
+      <Footer />
     </div>
   );
 };
