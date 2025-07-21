@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 const Home = () => {
   return (
     <div className="home-container">
-      <LoadPageimg />
+      
 
       <section className="home-content">
         <h1>Welcome to Farmart</h1>
@@ -19,6 +19,7 @@ const Home = () => {
           At Farmart, our mission is to transform the livestock market by empowering farmers, connecting communities, and delivering quality farm animals through a transparent and trustworthy platform. 
           We aim to create a fair and accessible space where buyers and sellers can thrive — built on integrity, affordability, and genuine care for animals and people alike.
         </p>
+      <LoadPageimg />
 
         <h1>Section heading</h1>
       </section>

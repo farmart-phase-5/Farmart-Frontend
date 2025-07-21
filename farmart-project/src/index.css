@@ -177,22 +177,22 @@ footer {
 
 
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
   padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  background-color: #f9f9f9;
 }
 
 .home-content {
-  margin-bottom: 2rem;
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .home-content h1 {
   font-size: 2.5rem;
-  color: #2c3e50;
+  color: #2f7c31;
   margin-bottom: 1rem;
 }
 
@@ -201,6 +201,55 @@ footer {
   margin: 1rem 0;
   line-height: 1.6;
   color: #444;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-top: 2rem;
+}
+
+.row section {
+  background-color: #f0f5f0;
+  border-left: 4px solid #4CAF50;
+  padding: 1rem;
+  flex: 1 1 250px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.row section:hover {
+  transform: translateY(-5px);
+}
+
+.row h3 {
+  color: #2f7c31;
+  margin-bottom: 0.3rem;
+}
+
+.row h4 {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.row p {
+  font-size: 1rem;
+  color: #444;
+}
+
+@media screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    padding: 1rem;
+  }
 }
 
 section {
