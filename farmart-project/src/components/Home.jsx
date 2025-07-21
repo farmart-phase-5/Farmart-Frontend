@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LoadPageimg from './LoadPageimg';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 
 const Home = () => {
+  const [comments, setComments] = useState([]);
+  const [form, setForm] = useState({ name: '', comment: '' });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (form.name.trim() && form.comment.trim()) {
+      setComments([...comments, { ...form, id: Date.now() }]);
+      setForm({ name: '', comment: '' });
+    }
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className="home-container">
-      
-
       <section className="home-content">
         <h1>Welcome to Farmart</h1>
         <p>
@@ -14,46 +27,78 @@ const Home = () => {
           Start exploring today and experience the smarter way to buy and sell livestock!
         </p>
 
-
         <p>
           At Farmart, our mission is to transform the livestock market by empowering farmers, connecting communities, and delivering quality farm animals through a transparent and trustworthy platform. 
           We aim to create a fair and accessible space where buyers and sellers can thrive — built on integrity, affordability, and genuine care for animals and people alike.
         </p>
-      <LoadPageimg />
 
+        <LoadPageimg />
         <h1>Section heading</h1>
       </section>
 
-      <div className='row'>
+      <div className="row">
         <section>
-        <h3>For Livestock Listings</h3>
-        <h4>"Available Livestock"</h4>
-        <p>Explore healthy, farm-raised animals ready for your farm.</p>
-      </section>
+          <h3>For Livestock Listings</h3>
+          <h4>"Available Livestock"</h4>
+          <p>Explore healthy, farm-raised animals ready for your farm.</p>
+        </section>
 
-      <section>
-        <h3>For Delivery & Services</h3>
-        <h4>"Our Services"</h4>
-        <p>Direct livestock delivery, trusted sellers, and hassle-free transactions.</p>
-      </section>
+        <section>
+          <h3>For Delivery & Services</h3>
+          <h4>"Our Services"</h4>
+          <p>Direct livestock delivery, trusted sellers, and hassle-free transactions.</p>
+        </section>
 
-      <section>
-        <h3>For Offers & Deals</h3>
-        <h4>"Special Deals & Discounts"</h4>
-        <p>Enjoy free delivery and exclusive livestock offers.</p>
-      </section>
+        <section>
+          <h3>For Offers & Deals</h3>
+          <h4>"Special Deals & Discounts"</h4>
+          <p>Enjoy free delivery and exclusive livestock offers.</p>
+        </section>
 
-      <section>
-        <h3>For Farmer Community</h3>
-        <h4>"Meet Our Farmers"</h4>
-        <p>Get to know the people behind the livestock.</p>
-      </section>
+        <section>
+          <h3>For Farmer Community</h3>
+          <h4>"Meet Our Farmers"</h4>
+          <p>Get to know the people behind the livestock.</p>
+        </section>
       </div>
+
+      {/* Comment Section */}
+      <section className="comment-section">
+        <h2>Leave a Comment</h2>
+        <form onSubmit={handleSubmit} className="comment-form">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your name"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="comment"
+            placeholder="Write your comment..."
+            value={form.comment}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Post Comment</button>
+        </form>
+
+        <div className="comments-list">
+          <h3>What people are saying:</h3>
+          {comments.length === 0 && <p>No comments yet.</p>}
+          {comments.map((c) => (
+            <div key={c.id} className="comment">
+              <strong>{c.name}</strong>
+              <p>{c.comment}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
 };
 
 export default Home;
-
-
