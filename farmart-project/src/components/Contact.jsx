@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faMapLocationDot, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,49 +21,49 @@ const Contact = () => {
         ></iframe>
       </div>
 
-      <div>
-        <div className='contactform'>
-          <h2>Drop Us Message</h2>
-          <form>
-            <label htmlFor="name">Name</label>
-            <input type='text' placeholder='Enter your name' />
-            <label htmlFor="email">Email</label>
-            <input type="email" placeholder='Enter your email address' />
-            <label htmlFor="message">Message</label>
-            <textarea name="message" placeholder='Your message here...'></textarea>
-            <button>Submit <FontAwesomeIcon icon={faArrowRight} /></button>
-          </form>
+      <div className='contactform'>
+        <h2>Drop Us a Message</h2>
+        <form>
+          <label htmlFor="name">Name</label>
+          <input type='text' placeholder='Enter your name' />
+          <label htmlFor="email">Email</label>
+          <input type="email" placeholder='Enter your email address' />
+          <label htmlFor="message">Message</label>
+          <textarea name="message" placeholder='Your message here...'></textarea>
+          <button type="submit">Submit <FontAwesomeIcon icon={faArrowRight} /></button>
+        </form>
+      </div>
+
+      {/* Contact Info */}
+      <div className='contactinfo'>
+        <h2>Get in Touch</h2>
+        <p>Feel free to contact us through any of the methods below:</p>
+
+        <div className='info-item'>
+          <FontAwesomeIcon icon={faMapLocationDot} className='icon' />
+          <div>
+            <h3>Address</h3>
+            <p>Ngong Road, P.O. Box 45425, Nairobi KE</p>
+          </div>
         </div>
 
-        <div className='contactinfo'>
-          <h2>Get in touch</h2>
-          <p>Feel free to contact us on any of the listed contact methods below</p>
-
-          <div className='address'>
-            <FontAwesomeIcon icon={faMapLocationDot} />
-            <div className='inneraddress'>
-              <h3>Address</h3>
-              <p>Ngong Road P O 45425 Nairobi KE</p>
-            </div>
+        <div className='info-item'>
+          <FontAwesomeIcon icon={faPhone} className='icon' />
+          <div>
+            <h3>Phone</h3>
+            <p>+254 708 444 961</p>
           </div>
+        </div>
 
-          <div className='phone'>
-            <FontAwesomeIcon icon={faPhone} />
-            <div className='innerphone'>
-              <h3>Phone</h3>
-              <p>+254708444961</p>
-            </div>
-          </div>
-
-          <div className='email'>
-            <FontAwesomeIcon icon={faEnvelope} />
-            <div className='inneremail'>
-              <h3>Email</h3>
-              <p>farmart@gmail.co.ke</p>
-            </div>
+        <div className='info-item'>
+          <FontAwesomeIcon icon={faEnvelope} className='icon' />
+          <div>
+            <h3>Email</h3>
+            <p>farmart@gmail.co.ke</p>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

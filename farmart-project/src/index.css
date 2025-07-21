@@ -613,6 +613,10 @@ section p {
   border-top: 1px solid #ddd;
 }
 
+.site-footer p {
+  color: #16a085;
+}
+
 .social-icons a {
   margin: 0 10px;
   color: #333;
@@ -633,4 +637,119 @@ section p {
 
 .instagram {
   color: #e1306c;
+}
+
+.contactpage {
+  text-align: center;
+}
+
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 16px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.contactform,
+.contactinfo {
+  flex: 1 1 400px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+
+.contactform h2 {
+  margin-bottom: 1rem;
+  color: #2f7c31;
+}
+
+.contactform form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactform label {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.contactform input,
+.contactform textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.contactform textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contactform button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.contactform button:hover {
+  background: #3d8a40;
+}
+
+
+.contactinfo h2 {
+  color: #2f7c31;
+  margin-bottom: 1rem;
+}
+
+.contactinfo p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.info-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.info-item .icon {
+  font-size: 1.5rem;
+  color: #4caf50;
+}
+
+.info-item h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.info-item p {
+  margin: 0.25rem 0 0;
+  color: #555;
+}
+
+
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
 }
