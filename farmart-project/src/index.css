@@ -1,4 +1,3 @@
-/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -23,14 +22,14 @@ img {
   height: auto;
 }
 
-/* LAYOUT UTILITIES */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-/* NAVBAR */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -46,7 +45,7 @@ img {
 }
 
 .logo {
-  height: 50px;
+  height: 90px;
 }
 
 .navbar-right {
@@ -100,7 +99,7 @@ img {
   color: #1abc9c;
 }
 
-/* BUTTONS */
+
 button,
 .btn {
   background-color: #1abc9c;
@@ -118,7 +117,7 @@ button:hover,
   background-color: #16a085;
 }
 
-/* FORM */
+
 form {
   display: flex;
   flex-direction: column;
@@ -141,7 +140,7 @@ select:focus {
   outline: none;
 }
 
-/* CARDS */
+
 .card {
   background: white;
   padding: 1.5rem;
@@ -150,7 +149,7 @@ select:focus {
   margin: 1.5rem 0;
 }
 
-/* FOOTER */
+
 footer {
   text-align: center;
   padding: 1.5rem;
@@ -159,7 +158,7 @@ footer {
   margin-top: 3rem;
 }
 
-/* LOADPAGE IMAGE */
+
 .loadpage-image-wrapper {
   width: 100%;
   max-width: 1000px;
@@ -176,24 +175,23 @@ footer {
   border-radius: 12px;
 }
 
-/* HOMEPAGE */
+
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
   padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  background-color: #f9f9f9;
 }
 
 .home-content {
-  margin-bottom: 2rem;
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 .home-content h1 {
+  text-align: left;
   font-size: 2.5rem;
-  color: #2c3e50;
+  color: #2f7c31;
   margin-bottom: 1rem;
 }
 
@@ -202,6 +200,56 @@ footer {
   margin: 1rem 0;
   line-height: 1.6;
   color: #444;
+  text-align: left;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-top: 2rem;
+}
+
+.row section {
+  background-color: #f0f5f0;
+  border-left: 4px solid #4CAF50;
+  padding: 1rem;
+  flex: 1 1 250px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.row section:hover {
+  transform: translateY(-5px);
+}
+
+.row h3 {
+  color: #2f7c31;
+  margin-bottom: 0.3rem;
+}
+
+.row h4 {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.row p {
+  font-size: 1rem;
+  color: #444;
+}
+
+@media screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    padding: 1rem;
+  }
 }
 
 section {
@@ -230,7 +278,7 @@ section p {
   color: #555;
 }
 
-/* SECTIONS */
+
 .section-row {
   display: flex;
   justify-content: space-between;
@@ -257,7 +305,7 @@ section p {
   margin-bottom: 2rem;
 }
 
-/* GRID ROWS */
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -461,11 +509,11 @@ section p {
 
 
 .admin-auth {
-  min-height: 100vh; /* Full screen height */
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertical centering */
-  align-items: center;     /* Horizontal centering */
+  justify-content: center; 
+  align-items: center;    
   background-color: #f4f7f9;
   padding: 2rem;
 }
@@ -501,7 +549,7 @@ section p {
 }
 
 .auth-button:hover {
-  background-color: #16a085;
+  background-color: black;
 }
 
 .auth-toggle {
@@ -522,5 +570,67 @@ section p {
 }
 
 .auth-switch:hover {
-  color: #16a085;
+  color: black;
+}
+
+.user-auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; 
+  text-align: center;
+  padding: 20px;
+}
+
+.user-auth form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  max-width: 90%;
+}
+
+.user-auth input,
+.user-auth button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.user-auth p {
+  margin-top: 15px;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+
+.site-footer {
+  margin-top: auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  text-align:left;
+  border-top: 1px solid #ddd;
+}
+
+.social-icons a {
+  margin: 0 10px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+.facebook {
+  color: #3b5998;
+}
+
+.twitter {
+  color: #1da1f2;
+}
+
+.instagram {
+  color: #e1306c;
 }
