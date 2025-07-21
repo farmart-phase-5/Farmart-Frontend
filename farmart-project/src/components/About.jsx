@@ -1,7 +1,9 @@
 import React from 'react';
-import cows from '../assets/cows.jpeg';
-import goats from '../assets/goats.jpeg';
-import sheeps from '../assets/sheeps.jpeg';
+import cows from '../assets/care.avif';
+import goats from '../assets/establishment.avif';
+import sheeps from '../assets/sheeps.jpg';
+import discounts from '../assets/discounts.avif';
+import deliveries from '../assets/deliveries.avif'
 import Footer from '../components/Footer';
 
 
@@ -42,7 +44,7 @@ const About = () => {
   <h1>Special Offers</h1>
   <div className='offer-grid'>
     <div className='offer-card horizontal'>
-      <img src={sheeps} alt="Free Delivery" />
+      <img src={deliveries} alt="Free Delivery" />
       <div className="offer-content">
         <h2>Free Deliveries</h2>
         <p>
@@ -52,7 +54,7 @@ const About = () => {
     </div>
 
     <div className='offer-card horizontal'>
-      <img src={goats} alt="Exclusive Discounts" />
+      <img src={discounts} alt="Exclusive Discounts" />
       <div className="offer-content">
         <h2>Exclusive Discounts</h2>
         <p>
