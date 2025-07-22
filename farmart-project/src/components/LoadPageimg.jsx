@@ -4,8 +4,8 @@ import LoadPage from '../components/LoadPage'
 
 const Loadpageimg = () => {
   return (
-    <div className='loaddis'>        
-        <img src={tasteImg} alt="Loadpage image" />
+    <div className='loadpage-image-wrapper'>        
+        <img src={tasteImg} alt="Loadpage image" className='loadpage-image'/>
         <LoadPage />
     </div>
   )

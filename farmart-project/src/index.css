@@ -22,13 +22,11 @@ img {
   height: auto;
 }
 
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
-
 
 .navbar {
   display: flex;
@@ -99,7 +97,6 @@ img {
   color: #1abc9c;
 }
 
-
 button,
 .btn {
   background-color: #1abc9c;
@@ -116,7 +113,6 @@ button:hover,
 .btn:hover {
   background-color: #16a085;
 }
-
 
 form {
   display: flex;
@@ -140,7 +136,6 @@ select:focus {
   outline: none;
 }
 
-
 .card {
   background: white;
   padding: 1.5rem;
@@ -148,7 +143,6 @@ select:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   margin: 1.5rem 0;
 }
-
 
 footer {
   text-align: center;
@@ -158,29 +152,36 @@ footer {
   margin-top: 3rem;
 }
 
-
 .loadpage-image-wrapper {
   width: 100%;
-  max-width: 1000px;
-  margin-bottom: 2rem;
-  overflow: hidden;
+  max-width: 1100px;
+  margin: 2rem auto;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  text-align: center; 
 }
 
 .loadpage-image {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: auto;            
+  object-fit: contain;     
+  display: block;
   border-radius: 12px;
 }
 
 
+@media (max-width: 768px) {
+  .loadpage-image {
+    height: 280px;
+  }
+}
+
 .home-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
   padding: 2rem;
   background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
 .home-content {
@@ -211,7 +212,7 @@ footer {
   padding: 2rem 1rem;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-top: 2rem;
 }
 
@@ -221,7 +222,7 @@ footer {
   padding: 1rem;
   flex: 1 1 250px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
 }
 
@@ -278,7 +279,6 @@ section p {
   color: #555;
 }
 
-
 .section-row {
   display: flex;
   justify-content: space-between;
@@ -304,27 +304,6 @@ section p {
 .mb-2 {
   margin-bottom: 2rem;
 }
-
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  width: 100%;
-}
-
-.row section {
-  flex: 1 1 calc(25% - 1.5rem);
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-  text-align: left;
-}
-
 
 .about-container {
   max-width: 1200px;
@@ -398,7 +377,7 @@ section p {
 }
 
 .offer-grid {
-   display: flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 2rem;
@@ -505,15 +484,18 @@ section p {
   .about-highlight h1 {
     font-size: 1.5rem;
   }
+
+  .contact-container {
+    flex-direction: column;
+  }
 }
 
-
 .admin-auth {
-  min-height: 100vh; 
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center;    
+  justify-content: center;
+  align-items: center;
   background-color: #f4f7f9;
   padding: 2rem;
 }
@@ -578,7 +560,7 @@ section p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; 
+  height: 100vh;
   text-align: center;
   padding: 20px;
 }
@@ -604,12 +586,11 @@ section p {
   text-decoration: underline;
 }
 
-
 .site-footer {
   margin-top: auto;
   padding: 20px;
   background-color: #f5f5f5;
-  text-align:left;
+  text-align: left;
   border-top: 1px solid #ddd;
 }
 
@@ -639,92 +620,6 @@ section p {
   color: #e1306c;
 }
 
-.contactpage {
-  text-align: center;
-}
-
-
-.contact-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  background: #f9f9f9;
-  border-radius: 16px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.contactform,
-.contactinfo {
-  flex: 1 1 400px;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
-
-
-.contactform h2 {
-  margin-bottom: 1rem;
-  color: #2f7c31;
-}
-
-.contactform form {
-  display: flex;
-  flex-direction: column;
-}
-
-.contactform label {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.contactform input,
-.contactform textarea {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.contactform textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.contactform button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background 0.3s ease;
-}
-
-.contactform button:hover {
-  background: #3d8a40;
-}
-
-
-.contactinfo h2 {
-  color: #2f7c31;
-  margin-bottom: 1rem;
-}
-
-.contactinfo p {
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  color: #555;
-}
-
 .info-item {
   display: flex;
   gap: 1rem;
@@ -745,13 +640,6 @@ section p {
 .info-item p {
   margin: 0.25rem 0 0;
   color: #555;
-}
-
-
-@media (max-width: 768px) {
-  .contact-container {
-    flex-direction: column;
-  }
 }
 
 .comment-section {
@@ -795,5 +683,78 @@ section p {
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
-  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.horizontal-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 1400px;
+}
+
+.card.horizontal {
+  flex: 1 1 calc(45% - 1rem);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #fff;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  min-height: 180px;
+}
+
+.card.horizontal:hover {
+  transform: translateY(-6px);
+}
+
+.card.horizontal img {
+  width: 160px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-content h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.4rem;
+  color: #2f7c31;
+}
+
+.card-content p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .horizontal-section {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .card.horizontal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card.horizontal img {
+    width: 100%;
+    height: auto;
+  }
+
+  .card-content {
+    text-align: left;
+  }
 }
