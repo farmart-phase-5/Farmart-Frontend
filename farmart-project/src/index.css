@@ -759,7 +759,6 @@ section p {
   }
 }
 
-/* General mobile padding for both pages */
 @media (max-width: 768px) {
   .about-container,
   .contact-container {
