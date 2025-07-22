@@ -5,6 +5,7 @@ import Sales from '../assets/sales.avif';
 import Daily from '../assets/Daily.png';
 import deliveries from '../assets/deliveries.avif';
 import cattle from '../assets/cattle.jpg';
+import online from '../assets/online.png'
 
 
 const Home = () => {
@@ -60,7 +61,7 @@ const Home = () => {
           </div>
         </div>
         <div className="card horizontal">
-          <img src="/images/weekly.jpg" alt="SalesWeekly" />
+          <img src={online} alt="SalesWeekly" />
           <div className="card-content">
             <h3>SalesWeekly</h3>
             <p>Join every major sale and never miss out.</p>
