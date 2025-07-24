@@ -23,7 +23,7 @@ const UserProfile = () => {
       return;
     }
 
-    fetch('https://brom-e-commerce-backend.onrender.com/api/users/me', {
+    fetch('https://farmart-backend-1-30rq.onrender.com/api/users/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },

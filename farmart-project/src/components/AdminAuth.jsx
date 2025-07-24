@@ -37,8 +37,8 @@ const AdminAuth = () => {
     setSuccess('');
 
     const endpoint = isRegister
-      ? 'https://brom-e-commerce-backend.onrender.com/api/auth/admin/register'
-      : 'https://brom-e-commerce-backend.onrender.com/api/auth/admin/login';
+      ? 'https://farmart-backend-1-30rq.onrender.com/api/auth/admin/register'
+      : 'https://farmart-backend-1-30rq.onrender.com/api/auth/admin/login';
 
     try {
       const res = await fetch(endpoint, {

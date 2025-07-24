@@ -20,7 +20,7 @@ function App() {
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    fetch('https://brom-e-commerce-backend.onrender.com/api/food')
+    fetch('https://farmart-backend-1-30rq.onrender.com/api/food')
       .then(res => res.json())
       .then(data => setproducts(data));
   }, []);
