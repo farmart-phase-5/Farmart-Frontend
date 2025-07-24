@@ -17,7 +17,7 @@ const DeleteProducts = ({ products, setproducts, setEditingProduct }) => {
     try {
       setDeletingId(id);
 
-        const res = await fetch(`https://brom-e-commerce-backend.onrender.com/api/food/${id}`, {
+        const res = await fetch(`https://farmart-backend-1-30rq.onrender.com/api/food/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

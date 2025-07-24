@@ -8,7 +8,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/users/admin/users', {
+        const res = await fetch('https://farmart-backend-1-30rq.onrender.com/api/users/admin/users', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

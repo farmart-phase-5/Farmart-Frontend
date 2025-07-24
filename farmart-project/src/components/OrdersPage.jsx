@@ -10,7 +10,7 @@ const OrdersPage = () => {
       if (!token) return;
 
       try {
-        const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/orders', {
+        const res = await fetch('https://farmart-backend-1-30rq.onrender.com/api/orders', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

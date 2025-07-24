@@ -34,7 +34,7 @@ const Contact = () => {
         </form>
       </div>
 
-      {/* Contact Info */}
+      
       <div className='contactinfo'>
         <h2>Get in Touch</h2>
         <p>Feel free to contact us through any of the methods below:</p>
