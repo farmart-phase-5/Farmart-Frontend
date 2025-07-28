@@ -13,8 +13,6 @@ const Loadpage = () => {
         <h1>Buy and sell quality farm animals — anytime, anywhere. <br Download Now /></h1>
         <p>Trusted livestock marketplace. Fair prices. Healthy animals. Free delivery included.</p>
         <button className='shop-now-btn' onClick={() => navigate('/orders')}>Shop Now</button>
-        {/* <button className='download-btn' onClick={handleDownloadClick}><FontAwesomeIcon icon="fa-brands fa-apple" /> Download for ios</button> */}
-        {/* <button className='download-btn' onClick={handleDownloadClick}><FontAwesomeIcon icon="fa-brands fa-google-play" /> Download for android</button> */}
     </div>
   )
 }

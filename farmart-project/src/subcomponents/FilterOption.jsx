@@ -5,8 +5,8 @@ const FilterOption = ({toggleSidebar,toggleCart,cartItemCount }) => {
     <div className='filter-options'>
         <button className="filter-btn" onClick={toggleSidebar}><FontAwesomeIcon icon={faFilter} /> Filter</button>
         <div className="logo-text">
-          <span className="taste">Taste</span>
-          <span className="town">Town</span>
+          <span className="farmart">Farmart</span>
+          <span className="farm">Farm</span>
         </div>
         <button className="cart-btn" onClick={toggleCart}><FontAwesomeIcon icon={faCartShopping} /> Cart ({cartItemCount})</button>
 

@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
-import Menu from './components/Menu';
 import ProductDetail from './subcomponents/ProductDetails';
 import Layout from './components/Layout';
 import Admin from './components/Admin';
@@ -14,13 +13,14 @@ import ProtectedRoute from './components/ProtectedRoute';
 import UserAuth from './components/UserAuth';
 import UserProfile from './components/UserProfile';
 import OrdersPage from './components/OrdersPage';
+import Products from './subcomponents/Products';
 
 
 function App() {
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    fetch('https://farmart-backend-1-30rq.onrender.com/api/food')
+    fetch('https://farmart-backend-1-30rq.onrender.com/api/products')
       .then(res => res.json())
       .then(data => setproducts(data));
   }, []);
@@ -33,7 +33,7 @@ function App() {
         { index: true, element: <Home /> },
         { path: 'About', element: <About /> },
         { path: 'Contact', element: <Contact /> },
-        { path: 'Menu', element: <ProtectedRoute><Menu products={products} /></ProtectedRoute> },
+        { path: 'products', element: <Products products={products} /> },
         { path: 'product/:id', element: <ProtectedRoute><ProductDetail /></ProtectedRoute> },
         { path: 'orders', element: <ProtectedRoute><OrdersPage /></ProtectedRoute> },
 

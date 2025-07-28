@@ -115,7 +115,7 @@ const FilterExchange = ({ products }) => {
     <div className="filter-exchange">
       <FilterOption toggleSidebar={toggleSidebar} toggleCart={toggleCart} cartItemCount={cartItems.length} />
 
-      {/* Cart Sidebar */}
+
       <div className={`sidecart ${showCart ? 'showcart' : 'hidecart'}`}>
         <h3>Your Cart ({cartItems.length})</h3>
         {cartItems.length === 0 ? (

@@ -45,7 +45,7 @@ const NavBar = () => {
 
     <nav className="nav-links">
       <Link to="/">Home</Link>
-      <Link to="/Menu">Menu</Link>
+      <Link to="/products">Products</Link>
       <Link to="/About">About us</Link>
       <Link to="/Contact">Contact</Link>
     </nav>
