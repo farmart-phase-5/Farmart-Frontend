@@ -1,7 +1,7 @@
 import React from 'react'
 import FilterExchange from '../subcomponents/FilterExchange'
 
-const Menu = ({products}) => {
+const Products = ({products}) => {
   return (
     <div>
       <FilterExchange products={products} />
@@ -9,4 +9,4 @@ const Menu = ({products}) => {
   )
 }
 
-export default Menu
+export default Products
