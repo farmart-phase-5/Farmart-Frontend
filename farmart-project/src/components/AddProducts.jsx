@@ -37,7 +37,7 @@ const AddProducts = ({ products }) => {
     };
 
     try {
-      const res = await fetch('https://farmart-backend-1-30rq.onrender.com/api/food', {
+      const res = await fetch('https://farmart-backened.onrender.com/api/food', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

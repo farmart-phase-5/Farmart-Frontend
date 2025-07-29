@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import cat from '../assets/cat 1.jpg';
+import dog from '../assets/dog.jpg';
+import puppys from '../assets/puppys.jpg';
+import chickens from '../assets/chickens.jpeg';
 
 const AdminAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
@@ -9,7 +13,7 @@ const AdminAuth = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-   const toggleMode = () => {
+  const toggleMode = () => {
     setIsRegister(prev => !prev);
     setError('');
     setSuccess('');
@@ -32,13 +36,13 @@ const AdminAuth = () => {
     e.preventDefault();
     if (!validateInputs()) return;
 
-     setLoading(true);
+    setLoading(true);
     setError('');
     setSuccess('');
 
     const endpoint = isRegister
-      ? 'https://farmart-backend-1-30rq.onrender.com/api/auth/admin/register'
-      : 'https://farmart-backend-1-30rq.onrender.com/api/auth/admin/login';
+      ? 'https://farmart-backened.onrender.com/api/auth/admin/register'
+      : 'https://farmart-backened.onrender.com/api/auth/admin/login';
 
     try {
       const res = await fetch(endpoint, {
@@ -47,7 +51,7 @@ const AdminAuth = () => {
         body: JSON.stringify(formData)
       });
 
-     const data = await res.json();
+      const data = await res.json();
       setLoading(false);
 
       if (!res.ok) {
@@ -69,21 +73,26 @@ const AdminAuth = () => {
       setLoading(false);
       setError('Failed to connect to server');
     }
-  }; 
+  };
 
-    return (
-    <div className="admin-auth">
-      <h2>{isRegister ? 'Admin Register' : 'Admin Login'}</h2>
+  return (
+    <div className="auth-wrapper">
+      <div className="auth-left">
+        <div className="logo">🟣 Farmart Farm</div>
+        <h1>Holla,<br />Welcome </h1>
+        <p className="sub-text">Hey, welcome to this special place</p>
 
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        {isRegister && (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="username"
+            placeholder="Name or Username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+
+          {isRegister && (
           <input
             type="email"
             name="email"
@@ -91,29 +100,49 @@ const AdminAuth = () => {
             value={formData.email}
             onChange={handleChange}
           />
-        )}
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          )}
 
-        {error && <p className="auth-error" style={{ color: 'red' }}>{error}</p>}
-        {success && <p className="auth-success" style={{ color: 'green' }}>{success}</p>}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-        <button type="submit" className="auth-button" disabled={loading}>
-          {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
-        </button>
-      </form>
+          <div className="auth-options">
+            <label>
+              <input type="checkbox" /> Remember me
+            </label>
+            <a href="/forgot-password">Forgot Password?</a>
+          </div>
 
-      <p className="auth-toggle">
-        {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
-        <button className="auth-switch" onClick={toggleMode}>
-          {isRegister ? 'Login' : 'Register'}
-        </button>
-      </p>
+          {error && <p className="auth-error" style={{ color: 'red' }}>{error}</p>}
+          {success && <p className="auth-success" style={{ color: 'green' }}>{success}</p>}
+
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
+          </button>
+        </form>
+
+        <p className="auth-toggle">
+          {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
+          <button className="auth-switch" onClick={toggleMode}>
+            {isRegister ? 'Login' : 'Register'}
+          </button>
+        </p>
+      </div>
+
+
+      <div className="auth-right-gallery">
+    <div className="image-box">
+      <img src={cat} alt="img1" />
+      <img src={dog} alt="img2" />
+      <img src={puppys} alt="img3" />
+      <img src={chickens} alt="img4" />
+    </div>
+  </div>
     </div>
   );
 };
