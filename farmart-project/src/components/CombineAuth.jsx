@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import UserAuth from './UserAuth';
 import AdminAuth from './AdminAuth';
 
-const CombinedAuthPage = () => {
-  const [view, setView] = useState('user'); 
+const CombineAuth = () => {
+  const [view, setView] = useState('user');
 
   return (
-    <div>
-      <div style={{ textAlign: 'center', margin: '20px' }}>
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <div style={{ marginBottom: '20px' }}>
         <button
           onClick={() => setView('user')}
           style={{
             marginRight: '10px',
             padding: '10px 20px',
-            backgroundColor: view === 'user' ? '#4caf50' : '#e0e0e0',
+            backgroundColor: view === 'user' ? '#4caf50' : '#ccc',
             color: view === 'user' ? '#fff' : '#000',
             border: 'none',
-            borderRadius: '4px',
+            borderRadius: '5px',
             cursor: 'pointer'
           }}
         >
@@ -26,10 +26,10 @@ const CombinedAuthPage = () => {
           onClick={() => setView('admin')}
           style={{
             padding: '10px 20px',
-            backgroundColor: view === 'admin' ? '#673ab7' : '#e0e0e0',
+            backgroundColor: view === 'admin' ? '#673ab7' : '#ccc',
             color: view === 'admin' ? '#fff' : '#000',
             border: 'none',
-            borderRadius: '4px',
+            borderRadius: '5px',
             cursor: 'pointer'
           }}
         >
@@ -42,4 +42,4 @@ const CombinedAuthPage = () => {
   );
 };
 
-export default CombinedAuthPage;
+export default CombineAuth;

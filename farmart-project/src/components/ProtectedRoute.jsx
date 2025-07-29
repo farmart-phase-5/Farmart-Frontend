@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/auth-required" replace />;
   }
 
-  return children;
+  return token ? children: <Navigate to="/auth-required" />;
 };
 
 export default ProtectedRoute;
