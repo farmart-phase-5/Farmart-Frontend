@@ -17,6 +17,7 @@ const Logout = () => {
       try {
         const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
           method: 'POST',
+          credentials: "include",
           headers: {
             'Authorization': `Bearer ${token}`,
           },
