@@ -44,7 +44,7 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
     };
 
     try {
-      const res = await fetch(`https://farmart-backend-1-30rq.onrender.com/api/products/${editingProduct.id}`, {
+      const res = await fetch(`https://farmart-backened.onrender.com/api/products/${editingProduct.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

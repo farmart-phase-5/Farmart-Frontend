@@ -14,13 +14,14 @@ import UserAuth from './components/UserAuth';
 import UserProfile from './components/UserProfile';
 import OrdersPage from './components/OrdersPage';
 import Products from './subcomponents/Products';
+import ForgotPassword from './components/ForgetPassword';
 
 
 function App() {
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    fetch('https://farmart-backend-1-30rq.onrender.com/api/products')
+    fetch('https://farmart-backened.onrender.com//api/products')
       .then(res => res.json())
       .then(data => setproducts(data));
   }, []);
@@ -36,6 +37,7 @@ function App() {
         { path: 'products', element: <Products products={products} /> },
         { path: 'product/:id', element: <ProtectedRoute><ProductDetail /></ProtectedRoute> },
         { path: 'orders', element: <ProtectedRoute><OrdersPage /></ProtectedRoute> },
+        { path: 'profile', element: <ProtectedRoute><UserProfile /></ProtectedRoute> },
 
 
         
@@ -52,7 +54,15 @@ function App() {
             : <Navigate to="/admin-auth" />
         },
         { path: 'user-auth', element: <UserAuth /> },
-        { path: 'auth-required', element: <AuthRequired /> }
+        { path: 'forgot-password', element: <ForgotPassword /> },
+        { path: 'auth-required', element: <AuthRequired /> },
+
+        {
+      path: 'Admin',
+      element: localStorage.getItem('adminToken')
+        ? <Admin products={products} setproducts={setproducts} />
+        : <Navigate to="/admin-auth" />
+        }
       ]
     },
     {

@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import horse from '../assets/horse.jpg'
+import poultry from '../assets/poultry.avif'
+import sheeps from '../assets/sheeps.jpg'
+import cat from '../assets/cat 3.jpg'
 
 const UserAuth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,7 +22,7 @@ const UserAuth = () => {
     if (!refreshToken) return null;
 
     try {
-      const res = await fetch('https://farmart-backend-1-30rq.onrender.com/api/auth/refresh', {
+      const res = await fetch('https://farmart-backened.onrender.com/api/auth/refresh', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${refreshToken}`
@@ -39,10 +43,10 @@ const UserAuth = () => {
     }
   };
 
-     const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLogin ? 'login' : 'register';
-    const url = `https://farmart-backend-1-30rq.onrender.com/api/auth/user/${endpoint}`;
+    const url = `https://farmart-backened.onrender.com/api/auth/user/${endpoint}`;
 
     const payload = isLogin
       ? { username: formData.username, password: formData.password }
@@ -68,13 +72,12 @@ const UserAuth = () => {
         localStorage.setItem('userRole', 'user');
         alert('Login successful!');
 
-        
         const freshAccessToken = await refreshAccessToken();
         if (freshAccessToken) {
           console.log('Access token refreshed successfully');
         }
 
-        window.location.href = '/menu'; 
+        window.location.href = '/menu';
       } else {
         alert('Registration successful! You can now log in.');
         setIsLogin(true);
@@ -85,42 +88,75 @@ const UserAuth = () => {
     }
   };
 
-    return (
-    <div className="user-auth">
-      <h2>{isLogin ? 'User Login' : 'User Registration'}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-        {!isLogin && (
+  return (
+    <div className="auth-wrapper">
+      
+      <div className="auth-left">
+        <div className="logo">🟢 Farmart</div>
+        <h1>{isLogin ? 'Welcome Back' : 'Create an Account'}</h1>
+        <p className="sub-text">
+          {isLogin ? 'Sign in to continue shopping' : 'Join the marketplace now'}
+        </p>
+
+        <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={formData.username}
             onChange={handleChange}
             required
           />
-        )}
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
-      </form>
 
-      <p onClick={toggleForm}>
-        {isLogin ? "Don't have an account? Register" : 'Already have an account? Login'}
-      </p>
+          {!isLogin && (
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          )}
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <div className="auth-options">
+            <label>
+              <input type="checkbox" /> Remember me
+            </label>
+            <a href="/forgot-password">Forgot Password?</a>
+          </div>
+
+          <button type="submit" className="auth-button">
+            {isLogin ? 'Login' : 'Register'}
+          </button>
+        </form>
+
+        <p className="auth-toggle">
+          {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
+          <button className="auth-switch" onClick={toggleForm}>
+            {isLogin ? 'Register' : 'Login'}
+          </button>
+        </p>
+      </div>
+
+
+      <div className="auth-right-gallery">
+        <div className="image-box">
+          <img src={horse} alt="img1" />
+          <img src={poultry} alt="img2" />
+          <img src={sheeps} alt="img3" />
+          <img src={cat} alt="img4" />
+        </div>
+      </div>
     </div>
   );
 };

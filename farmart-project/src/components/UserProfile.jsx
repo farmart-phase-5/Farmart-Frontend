@@ -149,7 +149,7 @@ const UserProfile = () => {
 
     try {
       const res = await fetch(
-        'https://brom-e-commerce-backend.onrender.com/api/users/me',
+        'https://farmart-backened.onrender.com/api/users/me',
         {
           method: 'DELETE',
           headers: { Authorization: `Bearer ${token}` },

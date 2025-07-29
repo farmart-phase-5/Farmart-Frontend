@@ -13,7 +13,7 @@ const Logout = () => {
     }
 
     try {
-      const res = await fetch('https://farmart-backend-1-30rq.onrender.com/api/auth/logout', {
+      const res = await fetch('https://farmart-backened.onrender.com/api/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

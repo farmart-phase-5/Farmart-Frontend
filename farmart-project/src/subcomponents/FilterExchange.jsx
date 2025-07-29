@@ -65,7 +65,7 @@ const FilterExchange = ({ products }) => {
 
     try {
       
-      const orderRes = await fetch('https://farmart-backend-1-30rq.onrender.com/api/orders', {
+      const orderRes = await fetch('https://farmart-backened.onrender.com/api/orders', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -77,7 +77,7 @@ const FilterExchange = ({ products }) => {
 
       
       for (const item of cartItems) {
-        const res = await fetch(`https://farmart-backend-1-30rq.onrender.com/api/orders/${newOrder.id}/items`, {
+        const res = await fetch(`https://farmart-backened.onrender.com/api/orders/${newOrder.id}/items`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
