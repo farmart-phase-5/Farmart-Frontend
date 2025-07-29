@@ -6,21 +6,10 @@ const Logout = () => {
 
   useEffect(() => {
     const logout = async () => {
-      const token = localStorage.getItem('adminToken');
-
-      if (!token) {
-        alert('No token found. Please log in first.');
-        navigate('/admin-auth');
-        return;
-      }
-
       try {
         const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
           method: 'POST',
-          credentials: "include",
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+          credentials: 'include', 
         });
 
         const data = await res.json();
@@ -34,7 +23,7 @@ const Logout = () => {
           navigate('/admin-auth');
         }
       } catch (error) {
-        console.error(error);
+        console.error('Logout error:', error);
         alert('An error occurred during logout.');
       }
     };
