@@ -116,14 +116,12 @@ const UserAuth = () => {
           onChange={handleChange}
           required
         />
-        <input
-          type="role"
-          name="role"
-          placeholder="Role"
-          value={formData.role}
-          onChange={handleChange}
-          required
-        />
+        <select name="role" value={formData.role} onChange={handleChange} required>
+  <option value="">Select role</option>
+  <option value="user">User</option>
+  <option value="admin">Admin</option>
+</select>
+
         <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
       </form>
 
