@@ -75,7 +75,7 @@ const UserAuth = () => {
           console.log('Access token refreshed successfully');
         }
 
-        window.location.href = '/menu'; 
+        window.location.href = '/products'; 
       } else {
         alert('Registration successful! You can now log in.');
         setIsLogin(true);
@@ -113,6 +113,14 @@ const UserAuth = () => {
           name="password"
           placeholder="Password"
           value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="role"
+          name="role"
+          placeholder="Role"
+          value={formData.role}
           onChange={handleChange}
           required
         />

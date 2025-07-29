@@ -5,39 +5,51 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const token = localStorage.getItem('adminToken');
+    const isAdmin = !!localStorage.getItem('adminToken');
+    const isUser = !!localStorage.getItem('userToken');
 
-    if (!token) {
-      alert('Admin not logged in.');
-      return;
+    if (isAdmin) {
+      const token = localStorage.getItem('adminToken') || localStorage.getItem('userToken');
+      try {
+  const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  const isJson = res.headers.get('content-type')?.includes('application/json');
+  const data = isJson ? await res.json() : null;
+
+  console.log("Logout response:", data);
+
+  if (!res.ok) {
+    console.error('Logout failed:', data);
+    alert(data?.error || 'Logout failed.');
+    return;
+  }
+
+  localStorage.removeItem('adminToken');
+  alert('Logout successful');
+  navigate('/admin-auth');
+} catch (err) {
+  console.error('Logout error (fetch failed):', err);
+  alert('An error occurred during logout.');
+}
+
+
     }
 
-    try {
-      const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+    if (isUser) {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('refreshToken');
+      alert('User logout successful.');
+      navigate('/auth');
+    }
 
-      const isJson = res.headers.get('content-type')?.includes('application/json');
-      const data = isJson ? await res.json() : null;
-
-      console.log("Logout response:", data);
-
-      if (!res.ok) {
-        console.error('Logout failed response:', data);
-        alert(data?.error || 'Logout failed.');
-        return;
-      }
-
-      localStorage.removeItem('adminToken');
-      alert('Admin logout successful.');
-      navigate('/admin-auth');
-    } catch (err) {
-      console.error('Logout error:', err);
-      alert('An error occurred during logout.');
+    if (!isAdmin && !isUser) {
+      alert('No user is logged in.');
     }
   };
 

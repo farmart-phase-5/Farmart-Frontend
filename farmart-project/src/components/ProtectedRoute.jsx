@@ -5,11 +5,13 @@ const ProtectedRoute = ({ children }) => {
   const userToken = localStorage.getItem('userToken');
   const adminToken = localStorage.getItem('adminToken');
 
-  if (!userToken && !adminToken) {
+  const token = userToken || adminToken;
+
+  if (!token) {
     return <Navigate to="/auth-required" replace />;
   }
 
-  return token ? children: <Navigate to="/auth-required" />;
+  return children;
 };
 
 export default ProtectedRoute;
