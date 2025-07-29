@@ -6,10 +6,20 @@ const Logout = () => {
 
   useEffect(() => {
     const logout = async () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        alert('No token found. Redirecting to login.');
+        navigate('/auth');
+        return;
+      }
+
       try {
         const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
           method: 'POST',
-          credentials: 'include', 
+          credentials: 'include',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
         });
 
         const data = await res.json();
@@ -20,10 +30,10 @@ const Logout = () => {
         } else {
           alert('Logged out successfully.');
           localStorage.removeItem('adminToken');
-          navigate('/admin-auth');
+          navigate('/auth');
         }
       } catch (error) {
-        console.error('Logout error:', error);
+        console.error(error);
         alert('An error occurred during logout.');
       }
     };
