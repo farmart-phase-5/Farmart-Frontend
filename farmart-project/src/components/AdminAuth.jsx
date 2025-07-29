@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AdminAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', email: '', password: '', role: 'admin' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,12 +42,11 @@ const AdminAuth = () => {
 
     try {
       const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-         },
-        body: JSON.stringify(formData)
-      });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(formData)
+});
+
 
       const data = await res.json();
       setLoading(false);
