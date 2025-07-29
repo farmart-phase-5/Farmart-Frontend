@@ -3,20 +3,20 @@ import React, { useState, useEffect } from 'react';
 const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
   const [formData, setFormData] = useState({
     name: '',
-    type: '',
-    breed: '',
     price: '',
-    image: ''
+    category: '',
+    description: '',
+    image_url: ''
   });
 
   useEffect(() => {
     if (editingProduct) {
       setFormData({
         name: editingProduct.name || '',
-        type: editingProduct.type || '',
-        breed: editingProduct.breed || '',
         price: editingProduct.price || '',
-        image: editingProduct.image || ''
+        category: editingProduct.category || '',
+        description: editingProduct.description || '',
+        image_url: editingProduct.image_url || ''
       });
     }
   }, [editingProduct]);
@@ -68,7 +68,7 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
 
   return (
     <div className="edit-form">
-      <h3>Edit Animal</h3>
+      <h3>Edit Product</h3>
       <form onSubmit={handleSubmit}>
         <input
           name="name"
@@ -76,19 +76,6 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
           onChange={handleChange}
           placeholder="Name"
           required
-        />
-        <input
-          name="type"
-          value={formData.type}
-          onChange={handleChange}
-          placeholder="Type"
-          required
-        />
-        <input
-          name="breed"
-          value={formData.breed}
-          onChange={handleChange}
-          placeholder="Breed"
         />
         <input
           name="price"
@@ -100,9 +87,21 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
           required
         />
         <input
-          name="image"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          placeholder="Category"
+        />
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Description"
+        />
+        <input
+          name="image_url"
           type="url"
-          value={formData.image}
+          value={formData.image_url}
           onChange={handleChange}
           placeholder="Image URL"
         />

@@ -3,78 +3,95 @@ import { useNavigate } from 'react-router-dom';
 
 const AdminAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    role: '', // Only used for registration
-  });
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const toggleMode = () => {
+    setIsRegister(prev => !prev);
+    setError('');
+    setSuccess('');
+  };
+
+  const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const toggleForm = () => {
-    setIsRegister((prev) => !prev);
+  const validateInputs = () => {
+    const { username, email, password } = formData;
+    if (!username || !password || (isRegister && !email)) {
+      setError('All fields are required');
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    if (!validateInputs()) return;
 
-    const url = isRegister
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    const endpoint = isRegister
       ? 'https://farmart-backend-2-ot47.onrender.com/register'
       : 'https://farmart-backend-2-ot47.onrender.com/login';
 
     try {
-      const res = await fetch(url, {
+      const res = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+         },
+        body: JSON.stringify(formData)
       });
 
       const data = await res.json();
-      console.log(`${isRegister ? 'Registration' : 'Login'} response:`, data);
+      setLoading(false);
 
       if (!res.ok) {
-        alert(data.message || 'Something went wrong.');
+        setError(data.error || 'Something went wrong');
         return;
       }
 
       if (!isRegister) {
         localStorage.setItem('adminToken', data.access_token);
-        alert('Login successful!');
-        navigate('/admin'); // Redirect to admin page
+        localStorage.setItem('userRole', 'admin');
+        setSuccess('Login successful! Redirecting...');
+        setTimeout(() => navigate('/Admin'), 1500);
       } else {
-        alert('Registration successful! You can now log in.');
+        setSuccess('Registration successful! You can now log in.');
         setIsRegister(false);
+        setFormData({ username: '', email: '', password: '' });
       }
-    } catch (error) {
-      console.error(error);
-      alert('Server error. Please try again.');
+    } catch (err) {
+      setLoading(false);
+      setError('Failed to connect to server');
     }
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '400px', margin: 'auto' }}>
-      <h2>{isRegister ? 'Register' : 'Login'} as Admin</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="admin-auth">
+      <h2>{isRegister ? 'Admin Register' : 'Admin Login'}</h2>
+
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="username"
           placeholder="Username"
           value={formData.username}
           onChange={handleChange}
-          required
         />
         {isRegister && (
           <input
-            type="text"
+            type="email"
             name="email"
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            required
           />
         )}
         <input
@@ -83,22 +100,21 @@ const AdminAuth = () => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          required
         />
-        {isRegister && (
-          <input
-            type="text"
-            name="role"
-            placeholder="Role"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          />
-        )}
-        <button type="submit">{isRegister ? 'Register' : 'Login'}</button>
+
+        {error && <p className="auth-error" style={{ color: 'red' }}>{error}</p>}
+        {success && <p className="auth-success" style={{ color: 'green' }}>{success}</p>}
+
+        <button type="submit" className="auth-button" disabled={loading}>
+          {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
+        </button>
       </form>
-      <p onClick={toggleForm} style={{ cursor: 'pointer', marginTop: '1rem' }}>
-        {isRegister ? 'Already have an account? Login' : "Don't have an account? Register"}
+
+      <p className="auth-toggle">
+        {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
+        <button className="auth-switch" onClick={toggleMode}>
+          {isRegister ? 'Login' : 'Register'}
+        </button>
       </p>
     </div>
   );

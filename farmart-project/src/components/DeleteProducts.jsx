@@ -4,43 +4,43 @@ const DeleteProducts = ({ products, setproducts, setEditingProduct }) => {
   const [deletingId, setDeletingId] = useState(null);
 
   async function handleDelete(id) {
-  const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-  if (!confirmDelete) return;
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
 
-  const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken");
 
-  if (!token) {
-    alert("Unauthorized. Admin token missing.");
-    return;
-  }
-
-  try {
-    setDeletingId(id);
-
-    const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.error || 'Failed to delete from server');
+    if (!token) {
+      alert("Unauthorized. Admin token missing.");
+      return;
     }
 
-    const filtered = products.filter(product => String(product.id) !== String(id));
-    setproducts(filtered);
-  } catch (err) {
-    console.error('Error deleting product:', err);
-    alert('Delete failed: ' + err.message);
-  } finally {
-    setDeletingId(null);
+    try {
+      setDeletingId(id);
+
+      const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to delete from server');
+      }
+
+      const filtered = products.filter(product => String(product.id) !== String(id));
+      setproducts(filtered);
+    } catch (err) {
+      console.error('Error deleting product:', err);
+      alert('Delete failed: ' + err.message);
+    } finally {
+      setDeletingId(null);
+    }
   }
-}
 
-
-    return (
+  return (
     <div className="admin-panel">
       <h2 className="admin-title">Manage Products</h2>
       {products.length === 0 ? (
