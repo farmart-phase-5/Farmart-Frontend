@@ -25,22 +25,11 @@ const NavBar = () => {
   <div className="navbar-right">
     <div className="sidebtn">
       <button className="userbtn" onClick={() => navigate('/Admin')}>
-        <FontAwesomeIcon icon={faUserGear} />
+        <FontAwesomeIcon icon={faUserCircle} />
       </button>
       <button className="shopbag" onClick={() => navigate('/orders')}>
         <FontAwesomeIcon icon={faBagShopping} />
       </button>
-      <button
-        className="profilebtn"
-        onClick={() => navigate(isAuthenticated ? '/profile' : '/user-auth')}
-      >
-        <FontAwesomeIcon icon={faUserCircle} />
-      </button>
-      {isAuthenticated ? (
-        <button className="signbtn" onClick={handleLogout}>Logout</button>
-      ) : (
-        <button className="signbtn" onClick={() => navigate('/user-auth')}>Sign Up</button>
-      )}
     </div>
 
     <nav className="nav-links">

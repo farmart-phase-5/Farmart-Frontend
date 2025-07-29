@@ -23,7 +23,7 @@ const UserProfile = () => {
       return;
     }
 
-    fetch('https://farmart-backend-1-30rq.onrender.com/api/users/me', {
+    fetch('https://farmart-backend-2-ot47.onrender.com/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,7 +63,7 @@ const UserProfile = () => {
 
     try {
       const res = await fetch(
-        'https://brom-e-commerce-backend.onrender.com/api/users/me',
+        'https://farmart-backend-2-ot47.onrender.com/me',
         {
           method: 'PATCH',
           headers: {
@@ -114,7 +114,7 @@ const UserProfile = () => {
 
     try {
       const res = await fetch(
-        'https://brom-e-commerce-backend.onrender.com/api/users/me/password',
+        'https://farmart-backend-2-ot47.onrender.com/me/password',
         {
           method: 'PATCH',
           headers: {
@@ -149,7 +149,7 @@ const UserProfile = () => {
 
     try {
       const res = await fetch(
-        'https://farmart-backened.onrender.com/api/users/me',
+        'https://farmart-backend-2-ot47.onrender.com/me',
         {
           method: 'DELETE',
           headers: { Authorization: `Bearer ${token}` },

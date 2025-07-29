@@ -8,7 +8,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('https://farmart-backened.onrender.com/api/users/admin/users', {
+        const res = await fetch('https://farmart-backend-2-ot47.onrender.com/admin/users', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

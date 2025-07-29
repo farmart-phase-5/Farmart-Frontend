@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddProducts = ({ products }) => {
+const AddProducts = () => {
   const [formData, setFormData] = useState({
     productName: '',
     productPrice: '',
@@ -11,110 +11,90 @@ const AddProducts = ({ products }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      alert("Unauthorized. Admin token missing.");
-      return;
-    }
-
-    if (formData.productPrice <= 0) {
-      alert('Product price must be a positive number.');
-      return;
-    }
-
-    const productData = {
-      name: formData.productName,
-      price: parseFloat(formData.productPrice),
-      category: formData.productCategory,
-      description: formData.productDescription,
-      image_url: formData.productImage
-    };
-
-    try {
-      const res = await fetch('https://farmart-backened.onrender.com/api/food', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(productData)
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to add product');
-      }
-
-      alert('Product added successfully!');
-      console.log('Product added:', data);
-
-      setFormData({
-        productName: '',
-        productPrice: '',
-        productCategory: '',
-        productDescription: '',
-        productImage: ''
-      });
-    } catch (error) {
-      console.error('Error:', error);
-      alert(`Error: ${error.message}`);
-    }
+  const data = {
+    name: formData.name,
+    description: formData.description,
+    price: formData.price,
+    image: formData.image,
+    category: formData.category
   };
 
+  try {
+    const token = localStorage.getItem("token"); 
+
+    const response = await fetch("https://farmart-backend-2-ot47.onrender.com/animals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      credentials: "include", 
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      alert("Product added successfully!");
+    } else {
+      const err = await response.json();
+      console.error("Add failed:", err);
+      alert("Failed to add product.");
+    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+    alert("Network error.");
+  }
+};
+
+
   return (
-    <div className='add-product-container'>
-      <h1>Add Products</h1>
+    <div>
+      <h2>Add Product</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="productName">Product Name:</label>
+        <label>Product Name:</label>
         <input
           type="text"
-          id="productName"
           name="productName"
           value={formData.productName}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="productPrice">Product Price:</label>
+        <label>Product Price:</label>
         <input
           type="number"
-          id="productPrice"
           name="productPrice"
           value={formData.productPrice}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="productCategory">Product Category:</label>
+        <label>Product Category:</label>
         <input
           type="text"
-          id="productCategory"
           name="productCategory"
           value={formData.productCategory}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="productDescription">Product Description:</label>
+        <label>Product Description (used as breed):</label>
         <textarea
-          id="productDescription"
           name="productDescription"
           value={formData.productDescription}
           onChange={handleChange}
           required
         ></textarea>
 
-        <label htmlFor="productImage">Product Image URL:</label>
+        <label>Image URL:</label>
         <input
           type="url"
-          id="productImage"
           name="productImage"
           value={formData.productImage}
           onChange={handleChange}

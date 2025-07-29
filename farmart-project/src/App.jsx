@@ -6,22 +6,22 @@ import Contact from './components/Contact';
 import ProductDetail from './subcomponents/ProductDetails';
 import Layout from './components/Layout';
 import Admin from './components/Admin';
-import AdminAuth from './components/AdminAuth';
+import CombineAuth from './components/CombineAuth';
 import Errorlink from './components/Errorlink';
 import AuthRequired from './components/AuthRequired';
 import ProtectedRoute from './components/ProtectedRoute';
-import UserAuth from './components/UserAuth';
 import UserProfile from './components/UserProfile';
 import OrdersPage from './components/OrdersPage';
 import Products from './subcomponents/Products';
-import ForgotPassword from './components/ForgetPassword';
-
+import ForgotPassword from './components/ForgetPassword'; 
+import AdminAuth from './components/AdminAuth';
+import UserAuth from './components/UserAuth';
 
 function App() {
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    fetch('https://farmart-backened.onrender.com//api/products')
+    fetch('https://farmart-backened.onrender.com/animals') 
       .then(res => res.json())
       .then(data => setproducts(data));
   }, []);
@@ -39,32 +39,23 @@ function App() {
         { path: 'orders', element: <ProtectedRoute><OrdersPage /></ProtectedRoute> },
         { path: 'profile', element: <ProtectedRoute><UserProfile /></ProtectedRoute> },
 
-
         
-        {
-          path: 'profile',
-          element: <ProtectedRoute><UserProfile /></ProtectedRoute>
-        },
+        { path: 'auth', element: <CombineAuth /> },
 
-        { path: 'admin-auth', element: <AdminAuth /> },
+        { path: 'forgot-password', element: <ForgotPassword /> },
+
+        { path: 'auth-required', element: <AuthRequired /> },
+
         {
           path: 'Admin',
           element: localStorage.getItem('adminToken')
             ? <Admin products={products} setproducts={setproducts} />
-            : <Navigate to="/admin-auth" />
-        },
-        { path: 'user-auth', element: <UserAuth /> },
-        { path: 'forgot-password', element: <ForgotPassword /> },
-        { path: 'auth-required', element: <AuthRequired /> },
-
-        {
-      path: 'Admin',
-      element: localStorage.getItem('adminToken')
-        ? <Admin products={products} setproducts={setproducts} />
-        : <Navigate to="/admin-auth" />
+            : <Navigate to="/auth" />
         }
       ]
     },
+
+
     {
       path: '*',
       element: <Errorlink />
@@ -75,4 +66,3 @@ function App() {
 }
 
 export default App;
-

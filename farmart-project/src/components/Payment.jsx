@@ -20,7 +20,7 @@ const PaymentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/payments/', formData);
+      const res = await axios.post('http://localhost:5173/payments/', formData);
       setMessage(`Payment successful! Status: ${res.data.status}`);
     } catch (err) {
       setMessage('Payment failed. Please try again.');

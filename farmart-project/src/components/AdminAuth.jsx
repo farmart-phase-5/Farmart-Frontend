@@ -1,148 +1,105 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import cat from '../assets/cat 1.jpg';
-import dog from '../assets/dog.jpg';
-import puppys from '../assets/puppys.jpg';
-import chickens from '../assets/chickens.jpeg';
 
 const AdminAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    role: '', // Only used for registration
+  });
   const navigate = useNavigate();
 
-  const toggleMode = () => {
-    setIsRegister(prev => !prev);
-    setError('');
-    setSuccess('');
-  };
-
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validateInputs = () => {
-    const { username, email, password } = formData;
-    if (!username || !password || (isRegister && !email)) {
-      setError('All fields are required');
-      return false;
-    }
-    return true;
+  const toggleForm = () => {
+    setIsRegister((prev) => !prev);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateInputs()) return;
 
-    setLoading(true);
-    setError('');
-    setSuccess('');
-
-    const endpoint = isRegister
-      ? 'https://farmart-backened.onrender.com/api/auth/admin/register'
-      : 'https://farmart-backened.onrender.com/api/auth/admin/login';
+    const url = isRegister
+      ? 'https://farmart-backend-2-ot47.onrender.com/register'
+      : 'https://farmart-backend-2-ot47.onrender.com/login';
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const data = await res.json();
-      setLoading(false);
+      console.log(`${isRegister ? 'Registration' : 'Login'} response:`, data);
 
       if (!res.ok) {
-        setError(data.error || 'Something went wrong');
+        alert(data.message || 'Something went wrong.');
         return;
       }
 
       if (!isRegister) {
         localStorage.setItem('adminToken', data.access_token);
-        localStorage.setItem('userRole', 'admin');
-        setSuccess('Login successful! Redirecting...');
-        setTimeout(() => navigate('/Admin'), 1500);
+        alert('Login successful!');
+        navigate('/admin'); // Redirect to admin page
       } else {
-        setSuccess('Registration successful! You can now log in.');
+        alert('Registration successful! You can now log in.');
         setIsRegister(false);
-        setFormData({ username: '', email: '', password: '' });
       }
-    } catch (err) {
-      setLoading(false);
-      setError('Failed to connect to server');
+    } catch (error) {
+      console.error(error);
+      alert('Server error. Please try again.');
     }
   };
 
   return (
-    <div className="auth-wrapper">
-      <div className="auth-left">
-        <div className="logo">🟣 Farmart Farm</div>
-        <h1>Holla,<br />Welcome </h1>
-        <p className="sub-text">Hey, welcome to this special place</p>
-
-        <form onSubmit={handleSubmit}>
+    <div style={{ padding: '2rem', maxWidth: '400px', margin: 'auto' }}>
+      <h2>{isRegister ? 'Register' : 'Login'} as Admin</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        {isRegister && (
           <input
             type="text"
-            name="username"
-            placeholder="Name or Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-
-          {isRegister && (
-          <input
-            type="email"
             name="email"
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
+            required
           />
-          )}
-
+        )}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        {isRegister && (
           <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
+            type="text"
+            name="role"
+            placeholder="Role"
+            value={formData.role}
             onChange={handleChange}
             required
           />
-
-          <div className="auth-options">
-            <label>
-              <input type="checkbox" /> Remember me
-            </label>
-            <a href="/forgot-password">Forgot Password?</a>
-          </div>
-
-          {error && <p className="auth-error" style={{ color: 'red' }}>{error}</p>}
-          {success && <p className="auth-success" style={{ color: 'green' }}>{success}</p>}
-
-          <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
-          </button>
-        </form>
-
-        <p className="auth-toggle">
-          {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
-          <button className="auth-switch" onClick={toggleMode}>
-            {isRegister ? 'Login' : 'Register'}
-          </button>
-        </p>
-      </div>
-
-
-      <div className="auth-right-gallery">
-    <div className="image-box">
-      <img src={cat} alt="img1" />
-      <img src={dog} alt="img2" />
-      <img src={puppys} alt="img3" />
-      <img src={chickens} alt="img4" />
-    </div>
-  </div>
+        )}
+        <button type="submit">{isRegister ? 'Register' : 'Login'}</button>
+      </form>
+      <p onClick={toggleForm} style={{ cursor: 'pointer', marginTop: '1rem' }}>
+        {isRegister ? 'Already have an account? Login' : "Don't have an account? Register"}
+      </p>
     </div>
   );
 };

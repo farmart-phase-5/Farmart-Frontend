@@ -1111,3 +1111,75 @@ section p {
   }
 }
 
+
+.auth-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-left {
+  flex: 1;
+  max-width: 450px;
+  margin: auto;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-left h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-left form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-left input,
+.auth-left select {
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.auth-left button[type="submit"] {
+  padding: 12px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.auth-left p {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.auth-left p button {
+  border: none;
+  background: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.auth-right {
+  flex: 1;
+  background: url('../assets/login.webp') center center / cover no-repeat;
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .auth-right {
+    display: block;
+  }
+}
