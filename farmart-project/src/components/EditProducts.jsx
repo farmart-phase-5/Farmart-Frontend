@@ -3,20 +3,20 @@ import React, { useState, useEffect } from 'react';
 const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
   const [formData, setFormData] = useState({
     name: '',
+    type: '',
+    breed: '',
     price: '',
-    category: '',
-    description: '',
-    image_url: ''
+    image: ''
   });
 
   useEffect(() => {
     if (editingProduct) {
       setFormData({
         name: editingProduct.name || '',
+        type: editingProduct.type || '',
+        breed: editingProduct.breed || '',
         price: editingProduct.price || '',
-        category: editingProduct.category || '',
-        description: editingProduct.description || '',
-        image_url: editingProduct.image_url || ''
+        image: editingProduct.image || ''
       });
     }
   }, [editingProduct]);
@@ -44,7 +44,7 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
     };
 
     try {
-      const res = await fetch(`https://farmart-backened.onrender.com/api/products/${editingProduct.id}`, {
+      const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${editingProduct.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
 
   return (
     <div className="edit-form">
-      <h3>Edit Product</h3>
+      <h3>Edit Animal</h3>
       <form onSubmit={handleSubmit}>
         <input
           name="name"
@@ -76,6 +76,19 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
           onChange={handleChange}
           placeholder="Name"
           required
+        />
+        <input
+          name="type"
+          value={formData.type}
+          onChange={handleChange}
+          placeholder="Type"
+          required
+        />
+        <input
+          name="breed"
+          value={formData.breed}
+          onChange={handleChange}
+          placeholder="Breed"
         />
         <input
           name="price"
@@ -87,21 +100,9 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
           required
         />
         <input
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          placeholder="Category"
-        />
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Description"
-        />
-        <input
-          name="image_url"
+          name="image"
           type="url"
-          value={formData.image_url}
+          value={formData.image}
           onChange={handleChange}
           placeholder="Image URL"
         />
