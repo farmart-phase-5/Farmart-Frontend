@@ -9,7 +9,7 @@ const Contact = () => {
       <h1>Contact us</h1>
       <p>Got a question? Send us a message. We would love to hear from you and we will respond as soon as possible.</p>
 
-      {/* Map and Form side-by-side */}
+
       <div className="contact-container">
         <div className='google-maps'>
           <iframe
@@ -34,7 +34,6 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Contact Info */}
       <div className='contactinfo'>
         <h2>Get in Touch</h2>
         <p>Feel free to contact us through any of the methods below:</p>

@@ -44,7 +44,7 @@ const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
     };
 
     try {
-      const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${editingProduct.id}`, {
+      const res = await fetch(`https://brom-e-commerce-backend.onrender.com/api/food/${editingProduct.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

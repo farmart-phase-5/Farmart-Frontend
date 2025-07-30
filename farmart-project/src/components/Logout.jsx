@@ -1,59 +1,52 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const logout = async () => {
-      const token = localStorage.getItem('adminToken');
+  const handleLogout = async () => {
+    const token = localStorage.getItem('adminToken');
 
-      if (!token) {
-        alert('No token found. Please log in first.');
-        navigate('/admin-auth');
+    if (!token) {
+      alert('Admin not logged in.');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      const isJson = res.headers.get('content-type')?.includes('application/json');
+      const data = isJson ? await res.json() : null;
+
+      console.log("Logout response:", data);
+
+      if (!res.ok) {
+        console.error('Logout failed response:', data);
+        alert(data?.error || 'Logout failed.');
         return;
       }
 
-      try {
-        const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
-          method: 'POST',
-          credentials: "include",
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        const data = await res.json();
-        console.log('Logout response:', data);
-
-        if (!res.ok) {
-          alert(data.message || 'Logout failed.');
-        } else {
-          alert('Logged out successfully.');
-          localStorage.removeItem('adminToken');
-          navigate('/admin-auth');
-        }
-      } catch (error) {
-        console.error(error);
-        alert('An error occurred during logout.');
-      }
-    };
-
-    logout();
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminInfo');
-    navigate('/login');
+      localStorage.removeItem('adminToken');
+      alert('Admin logout successful.');
+      navigate('/admin-auth');
+    } catch (err) {
+      console.error('Logout error:', err);
+      alert('An error occurred during logout.');
+    }
   };
 
-  return (<button className="logout-button" onClick={handleLogout}>
+  return (
+    <button className="logout-button" onClick={handleLogout}>
       <span role="img" aria-label="logout" style={{ marginRight: '8px' }}>🚪</span>
       Logout
-    </button>);
+    </button>
+  );
 };
 
 export default Logout;

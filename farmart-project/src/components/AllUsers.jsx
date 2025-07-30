@@ -8,7 +8,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('https://farmart-backend-2-ot47.onrender.com/admin/users', {
+        const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/users/admin/users', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -30,7 +30,7 @@ const AllUsers = () => {
     fetchUsers();
   }, [token]);
 
-     return (
+  return (
     <div className="user-table">
       <h2>All Users</h2>
       {error && <p className="error-message">{error}</p>}

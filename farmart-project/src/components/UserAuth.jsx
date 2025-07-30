@@ -18,7 +18,7 @@ const UserAuth = () => {
     if (!refreshToken) return null;
 
     try {
-      const res = await fetch('https://farmart-backend-2-ot47.onrender.com/refresh', {
+      const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/auth/refresh', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${refreshToken}`
@@ -42,7 +42,7 @@ const UserAuth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLogin ? 'login' : 'register';
-    const url = `https://farmart-backend-2-ot47.onrender.com/${endpoint}`;
+    const url = `https://brom-e-commerce-backend.onrender.com/api/auth/user/${endpoint}`;
 
     const payload = isLogin
       ? { username: formData.username, password: formData.password }
