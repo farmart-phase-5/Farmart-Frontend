@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const UserAuth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', email: '', password: '', role: '' });
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -41,50 +41,57 @@ const UserAuth = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const endpoint = isLogin ? 'login' : 'register';
-    const url = `https://farmart-backend-2-ot47.onrender.com/${endpoint}`;
+  e.preventDefault();
+  const endpoint = isLogin ? 'login' : 'register';
+  const url = `https://farmart-backend-2-ot47.onrender.com/${endpoint}`;
 
-    const payload = isLogin
-      ? { username: formData.username, password: formData.password }
-      : formData;
+  const payload = isLogin
+    ? { username: formData.username, password: formData.password }
+    : formData;
 
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        alert(data?.error || 'Authentication failed.');
-        return;
-      }
-
-      if (isLogin) {
-        localStorage.setItem('userToken', data.access_token);
-        localStorage.setItem('refreshToken', data.refresh_token);
-        localStorage.setItem('userRole', 'user');
-        alert('Login successful!');
-
-        
-        const freshAccessToken = await refreshAccessToken();
-        if (freshAccessToken) {
-          console.log('Access token refreshed successfully');
-        }
-
-        window.location.href = '/products'; 
-      } else {
-        alert('Registration successful! You can now log in.');
-        setIsLogin(true);
-      }
-    } catch (err) {
-      console.error('Auth error:', err);
-      alert('An error occurred.');
+    if (!res.ok) {
+      alert(data?.error || 'Authentication failed.');
+      return;
     }
-  };
+
+    if (isLogin) {
+      localStorage.setItem('refreshToken', data.refresh_token);
+
+      if (data.user.role === 'admin') {
+        localStorage.setItem('adminToken', data.access_token);
+        localStorage.setItem('adminInfo', JSON.stringify(data.user));
+      } else {
+        localStorage.setItem('userToken', data.access_token);
+        localStorage.setItem('userInfo', JSON.stringify(data.user));
+      }
+
+      alert('Login successful!');
+
+      const freshAccessToken = await refreshAccessToken();
+      if (freshAccessToken) {
+        console.log('Access token refreshed successfully');
+      }
+
+      window.location.href = '/products';
+    } else {
+      alert('Registration successful! You can now log in.');
+      setIsLogin(true);
+    }
+  } catch (err) {
+    console.error('Auth error:', err);
+    alert('An error occurred.');
+  }
+};
+
 
   return (
     <div className="user-auth">

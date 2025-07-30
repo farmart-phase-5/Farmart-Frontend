@@ -8,12 +8,18 @@ import { faUserGear, faBagShopping, faUserCircle } from '@fortawesome/free-solid
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem('userToken');
+  // const isAuthenticated = !!localStorage.getItem('userToken');
 
-  const handleLogout = () => {
-    localStorage.removeItem('userToken');
-    navigate('/');
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem('userToken');
+  //   localStorage.removeItem('userInfo');
+  //   localStorage.removeItem('adminToken');
+  //   localStorage.removeItem('adminInfo');
+  //   navigate('/login');
+  // };
+
+  // const user = JSON.parse(localStorage.getItem('userInfo')) || 
+  //              JSON.parse(localStorage.getItem('adminInfo'));
 
   return (
     
