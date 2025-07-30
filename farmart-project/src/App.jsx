@@ -58,6 +58,8 @@ function App() {
 
         
         { path: 'auth', element: <CombineAuth /> },
+        { path: 'login', element: <Navigate to="/auth" replace /> },
+        { path: 'register', element: <Navigate to="/auth" replace /> },
 
         { path: 'forgot-password', element: <ForgotPassword /> },
 

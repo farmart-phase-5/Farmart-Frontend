@@ -1,103 +1,131 @@
 import React, { useState } from 'react';
 
-const AddProductForm = () => {
+const AddProducts = ({ products }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    category: '',
-    price: '',
-    description: '',
-    image: '', // base64
+    productName: '',
+    productPrice: '',
+    productCategory: '',
+    productDescription: '',
+    productImage: ''
   });
-
-  const [message, setMessage] = useState('');
-  const user = JSON.parse(localStorage.getItem('userInfo'));
-  const token = localStorage.getItem('token');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData((prev) => ({
-        ...prev,
-        image: reader.result,
-      }));
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (user?.role !== 'farmer') {
-      setMessage("Unauthorized: Only farmers can add products.");
+    const token = localStorage.getItem("adminToken");
+    if (!token) {
+      alert("Unauthorized. Admin token missing.");
       return;
     }
 
+    if (formData.productPrice <= 0) {
+      alert('Product price must be a positive number.');
+      return;
+    }
+
+    const productData = {
+      name: formData.productName,
+      price: parseFloat(formData.productPrice),
+      category: formData.productCategory,
+      description: formData.productDescription,
+      image_url: formData.productImage
+    };
+
     try {
-      const res = await fetch('https://farmart-backend-2-ot47.onrender.com/products', {
+      const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/food', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(productData)
       });
 
       const data = await res.json();
 
-      if (res.ok) {
-        setMessage('Product added successfully!');
-        setFormData({
-          name: '',
-          category: '',
-          price: '',
-          description: '',
-          image: '',
-        });
-      } else {
-        setMessage(data.error || 'Failed to add product');
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to add product');
       }
-    } catch (err) {
-      console.error(err);
-      setMessage('Error occurred while adding product');
+
+      alert('Product added successfully!');
+      console.log('Product added:', data);
+
+      // Clear form
+      setFormData({
+        productName: '',
+        productPrice: '',
+        productCategory: '',
+        productDescription: '',
+        productImage: ''
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error: ${error.message}`);
     }
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '2rem auto', padding: '1rem', border: '1px solid #ccc', borderRadius: '10px' }}>
-      <h2>Add Animal for Sale</h2>
-      {message && <p>{message}</p>}
+    <div className='add-product-container'>
+      <h1>Add Products</h1>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="productName">Product Name:</label>
+        <input
+          type="text"
+          id="productName"
+          name="productName"
+          value={formData.productName}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+        <label htmlFor="productPrice">Product Price:</label>
+        <input
+          type="number"
+          id="productPrice"
+          name="productPrice"
+          value={formData.productPrice}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Category:</label>
-        <input type="text" name="category" value={formData.category} onChange={handleChange} required />
+        <label htmlFor="productCategory">Product Category:</label>
+        <input
+          type="text"
+          id="productCategory"
+          name="productCategory"
+          value={formData.productCategory}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Price (Ksh):</label>
-        <input type="number" name="price" value={formData.price} onChange={handleChange} required />
+        <label htmlFor="productDescription">Product Description:</label>
+        <textarea
+          id="productDescription"
+          name="productDescription"
+          value={formData.productDescription}
+          onChange={handleChange}
+          required
+        ></textarea>
 
-        <label>Description:</label>
-        <textarea name="description" value={formData.description} onChange={handleChange} required />
+        <label htmlFor="productImage">Product Image URL:</label>
+        <input
+          type="url"
+          id="productImage"
+          name="productImage"
+          value={formData.productImage}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Image:</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} required />
-
-        <button type="submit" style={{ marginTop: '1rem' }}>Add Product</button>
+        <button type="submit">Add Product</button>
       </form>
     </div>
   );
 };
 
-export default AddProductForm;
+export default AddProducts;
