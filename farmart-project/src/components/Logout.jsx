@@ -42,7 +42,18 @@ const Logout = () => {
     logout();
   }, [navigate]);
 
-  return <p>Logging out...</p>;
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminInfo');
+    navigate('/login');
+  };
+
+  return (<button className="logout-button" onClick={handleLogout}>
+      <span role="img" aria-label="logout" style={{ marginRight: '8px' }}>🚪</span>
+      Logout
+    </button>);
 };
 
 export default Logout;

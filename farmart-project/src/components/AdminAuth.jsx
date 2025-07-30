@@ -1,120 +1,134 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import horse from '../assets/horse.jpg';
+import poultry from '../assets/poultry.avif';
+import sheeps from '../assets/sheeps.jpg';
+import cat from '../assets/cat 3.jpg';
 
 const AdminAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({ username: '', email: '', password: '', role: 'admin' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const toggleMode = () => {
-    setIsRegister(prev => !prev);
-    setError('');
-    setSuccess('');
-  };
-
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const validateInputs = () => {
-    const { username, email, password } = formData;
-    if (!username || !password || (isRegister && !email)) {
-      setError('All fields are required');
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-    if (!validateInputs()) return;
-
-    setLoading(true);
     setError('');
     setSuccess('');
+  };
 
-    const endpoint = isRegister
-      ? 'https://farmart-backend-2-ot47.onrender.com/register'
-      : 'https://farmart-backend-2-ot47.onrender.com/login';
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
 
     try {
-      const res = await fetch(endpoint, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData)
-});
+      const response = await fetch(`https://farmart-backend-2-ot47.onrender.com/${isRegister ? 'register' : 'login'}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(isRegister ? formData : {
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
 
+      const data = await response.json();
 
-      const data = await res.json();
-      setLoading(false);
-
-      if (!res.ok) {
-        setError(data.error || 'Something went wrong');
-        return;
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
       }
 
       if (!isRegister) {
+        if (data.user.role !== 'admin') {
+          setError('Access denied: Not an admin.');
+          return;
+        }
+
         localStorage.setItem('adminToken', data.access_token);
-        localStorage.setItem('userRole', 'admin');
-        setSuccess('Login successful! Redirecting...');
+        localStorage.setItem('adminInfo', JSON.stringify(data.user));
+        setSuccess('Admin login successful! Redirecting...');
         setTimeout(() => navigate('/Admin'), 1500);
       } else {
-        setSuccess('Registration successful! You can now log in.');
+        setSuccess('Registration successful! You can now login.');
         setIsRegister(false);
-        setFormData({ username: '', email: '', password: '' });
       }
     } catch (err) {
-      setLoading(false);
-      setError('Failed to connect to server');
+      setError(err.message);
     }
   };
 
   return (
-    <div className="admin-auth">
-      <h2>{isRegister ? 'Admin Register' : 'Admin Login'}</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="w-full max-w-5xl flex flex-col md:flex-row shadow-lg bg-white rounded-xl overflow-hidden">
+      
+        <div className="w-full md:w-1/2 grid grid-cols-2 gap-1 p-2">
+          <img src={horse} alt="Horse" className="h-48 object-cover rounded" />
+          <img src={poultry} alt="Poultry" className="h-48 object-cover rounded" />
+          <img src={sheeps} alt="Sheep" className="h-48 object-cover rounded" />
+          <img src={cat} alt="Cat" className="h-48 object-cover rounded" />
+        </div>
 
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        {isRegister && (
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        )}
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+  
+        <div className="w-full md:w-1/2 p-8">
+          <h2 className="text-2xl font-bold mb-6 text-center text-green-700">
+            {isRegister ? 'Admin Register' : 'Admin Login'}
+          </h2>
 
-        {error && <p className="auth-error" style={{ color: 'red' }}>{error}</p>}
-        {success && <p className="auth-success" style={{ color: 'green' }}>{success}</p>}
+          {error && <div className="mb-4 text-red-600 font-semibold">{error}</div>}
+          {success && <div className="mb-4 text-green-600 font-semibold">{success}</div>}
 
-        <button type="submit" className="auth-button" disabled={loading}>
-          {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
-        </button>
-      </form>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border rounded"
+            />
+            {isRegister && (
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border rounded"
+              />
+            )}
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border rounded"
+            />
+            <button
+              type="submit"
+              className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+            >
+              {isRegister ? 'Register as Admin' : 'Login as Admin'}
+            </button>
+          </form>
 
-      <p className="auth-toggle">
-        {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
-        <button className="auth-switch" onClick={toggleMode}>
-          {isRegister ? 'Login' : 'Register'}
-        </button>
-      </p>
+          <p className="text-center mt-4 text-sm">
+            {isRegister ? 'Already have an account?' : 'Need an account?'}
+            <button
+              onClick={() => setIsRegister(!isRegister)}
+              className="ml-2 text-blue-600 underline"
+            >
+              {isRegister ? 'Login here' : 'Register here'}
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

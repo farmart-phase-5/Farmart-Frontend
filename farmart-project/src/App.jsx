@@ -17,14 +17,31 @@ import ForgotPassword from './components/ForgetPassword';
 import AdminAuth from './components/AdminAuth';
 import UserAuth from './components/UserAuth';
 
+
 function App() {
   const [products, setproducts] = useState([]);
+  const [auth, setAuth] = useState(null);
 
   useEffect(() => {
     fetch('https://farmart-backened.onrender.com/animals') 
       .then(res => res.json())
       .then(data => setproducts(data));
   }, []);
+
+//   useEffect(() => {
+//   const userToken = localStorage.getItem('userToken');
+//   const userInfo = localStorage.getItem('userInfo');
+
+//   const adminToken = localStorage.getItem('adminToken');
+//   const adminInfo = localStorage.getItem('adminInfo');
+
+//   if (adminToken && adminInfo) {
+//     setAuth({ token: adminToken, user: JSON.parse(adminInfo) });
+//   } else if (userToken && userInfo) {
+//     setAuth({ token: userToken, user: JSON.parse(userInfo) });
+//   }
+// }, []);
+
 
   const router = createBrowserRouter([
     {
@@ -47,11 +64,14 @@ function App() {
         { path: 'auth-required', element: <AuthRequired /> },
 
         {
-          path: 'Admin',
-          element: localStorage.getItem('adminToken')
-            ? <Admin products={products} setproducts={setproducts} />
-            : <Navigate to="/auth" />
-        }
+  path: 'Admin',
+  element: (
+    <ProtectedRoute>
+      <Admin products={products} setproducts={setproducts} />
+    </ProtectedRoute>
+  )
+}
+
       ]
     },
 
