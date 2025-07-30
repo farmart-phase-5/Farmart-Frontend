@@ -28,19 +28,19 @@ function App() {
       .then(data => setproducts(data));
   }, []);
 
-//   useEffect(() => {
-//   const userToken = localStorage.getItem('userToken');
-//   const userInfo = localStorage.getItem('userInfo');
+  useEffect(() => {
+  const userToken = localStorage.getItem('userToken');
+  const userInfo = localStorage.getItem('userInfo');
 
-//   const adminToken = localStorage.getItem('adminToken');
-//   const adminInfo = localStorage.getItem('adminInfo');
+  const adminToken = localStorage.getItem('adminToken');
+  const adminInfo = localStorage.getItem('adminInfo');
 
-//   if (adminToken && adminInfo) {
-//     setAuth({ token: adminToken, user: JSON.parse(adminInfo) });
-//   } else if (userToken && userInfo) {
-//     setAuth({ token: userToken, user: JSON.parse(userInfo) });
-//   }
-// }, []);
+  if (adminToken && adminInfo) {
+    setAuth({ token: adminToken, user: JSON.parse(adminInfo) });
+  } else if (userToken && userInfo) {
+    setAuth({ token: userToken, user: JSON.parse(userInfo) });
+  }
+}, []);
 
 
   const router = createBrowserRouter([
@@ -49,8 +49,8 @@ function App() {
       element: <Layout />,
       children: [
         { index: true, element: <Home /> },
-        { path: 'About', element: <About /> },
-        { path: 'Contact', element: <Contact /> },
+        { path: 'about', element: <About /> },
+        { path: 'contact', element: <Contact /> },
         { path: 'products', element: <Products products={products} /> },
         { path: 'product/:id', element: <ProtectedRoute><ProductDetail /></ProtectedRoute> },
         { path: 'orders', element: <ProtectedRoute><OrdersPage /></ProtectedRoute> },
@@ -63,8 +63,10 @@ function App() {
 
         { path: 'auth-required', element: <AuthRequired /> },
 
+        { path: 'admin-auth', element: <AdminAuth /> },
+
         {
-  path: 'Admin',
+  path: 'admin',
   element: (
     <ProtectedRoute>
       <Admin products={products} setproducts={setproducts} />
