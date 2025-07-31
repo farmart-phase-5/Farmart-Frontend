@@ -1,16 +1,22 @@
+// src/components/ProtectedRoute.jsx
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ allowedRoles, children }) => {
-  const location = useLocation();
+const ProtectedRoute = ({ children, allowedRoles = [] }) => {
+  const token = localStorage.getItem('token');
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const tokenExpiration = localStorage.getItem('tokenExpiration');
 
-  const user = JSON.parse(localStorage.getItem('user'));
-  const admin = JSON.parse(localStorage.getItem('admin'));
+  const isTokenValid = token && tokenExpiration && Date.now() < Number(tokenExpiration);
+  const roleIsAllowed = allowedRoles.length === 0 || allowedRoles.includes(userData.role);
 
-  const role = user ? 'user' : admin ? 'admin' : null;
+  if (!isTokenValid) {
+    localStorage.clear(); 
+    return <Navigate to="/login" replace />;
+  }
 
-  if (!role || !allowedRoles.includes(role)) {
-    return <Navigate to={`/auth-required?role=${allowedRoles[0]}`} state={{ from: location }} replace />;
+  if (!roleIsAllowed) {
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return children;
