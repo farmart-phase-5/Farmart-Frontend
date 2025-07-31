@@ -34,7 +34,7 @@ const Logout = () => {
 
       localStorage.removeItem('adminToken');
       alert('Admin logout successful.');
-      navigate('/admin-auth');
+      navigate('/auth');
     } catch (err) {
       console.error('Logout error:', err);
       alert('An error occurred during logout.');

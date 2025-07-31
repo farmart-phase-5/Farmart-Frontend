@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const UserProfile = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -10,233 +9,261 @@ const UserProfile = () => {
     current_password: '',
     new_password: '',
   });
-
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const token = localStorage.getItem('userToken');
+  const token = localStorage.getItem('token');
 
-  
   useEffect(() => {
     if (!token) {
-      navigate('/user-auth');
+      navigate('/auth');
       return;
     }
 
-    fetch('https://farmart-backend-2-ot47.onrender.com/me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 401 || res.status === 403) {
-          localStorage.removeItem('userToken');
-          navigate('/user-auth');
-          throw new Error('Unauthorized');
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('https://farmart-backend-2-ot47.onrender.com/me', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          credentials: 'include',
+        });
+
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/auth');
+          return;
         }
-        return res.json();
-      })
-      .then((data) => {
-        setFormData((prev) => ({
-          ...prev,
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+
+        const data = await response.json();
+        setFormData({
           username: data.username || '',
           email: data.email || '',
-        }));
+          current_password: '',
+          new_password: '',
+        });
+      } catch (err) {
+        console.error('Error:', err);
+        localStorage.removeItem('token');
+        navigate('/auth');
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Fetch error:', err);
-        setError('Please log in again.');
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchUserData();
   }, [navigate, token]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
     setError('');
     setSuccess('');
   };
 
-    const handleUpdateProfile = async () => {
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    setUpdating(true);
     setError('');
     setSuccess('');
 
     try {
-      const res = await fetch(
-        'https://farmart-backend-2-ot47.onrender.com/me',
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            username: formData.username,
-            email: formData.email,
-          }),
-        }
-      );
+      const response = await fetch('https://farmart-backend-2-ot47.onrender.com/me', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+        }),
+      });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data?.error || 'Profile update failed');
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/auth');
         return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.error || 'Update failed');
       }
 
       setSuccess('Profile updated successfully!');
     } catch (err) {
-      console.error(err);
-      setError('Something went wrong during profile update.');
+      setError(err.message);
+    } finally {
+      setUpdating(false);
     }
   };
 
-  const handleUpdatePassword = async () => {
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    setUpdating(true);
     setError('');
     setSuccess('');
 
-    const { current_password, new_password } = formData;
-
-    if (!current_password || !new_password) {
-      setError('Both current and new password are required');
-      return;
-    }
-
-    if (new_password.length < 8) {
-      setError('New password must be at least 8 characters long');
-      return;
-    }
-
-    if (current_password === new_password) {
-      setError('New password must be different from the current one');
-      return;
-    }
-
     try {
-      const res = await fetch(
-        'https://farmart-backend-2-ot47.onrender.com/me/password',
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ current_password, new_password }),
-        }
-      );
+      const { current_password, new_password } = formData;
 
-      const data = await res.json();
+      if (!current_password || !new_password) {
+        throw new Error('Both passwords are required');
+      }
 
-      if (!res.ok) {
-        setError(data?.error || 'Password update failed');
+      if (new_password.length < 8) {
+        throw new Error('Password must be at least 8 characters');
+      }
+
+      const response = await fetch('https://farmart-backend-2-ot47.onrender.com/me/password', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ current_password, new_password }),
+      });
+
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/auth');
         return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.error || 'Password update failed');
       }
 
       setSuccess('Password updated successfully!');
-      setFormData((prev) => ({
-        ...prev,
-        current_password: '',
-        new_password: '',
-      }));
+      setFormData(prev => ({ ...prev, current_password: '', new_password: '' }));
     } catch (err) {
-      console.error(err);
-      setError('Something went wrong while updating password.');
+      setError(err.message);
+    } finally {
+      setUpdating(false);
     }
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete your account?')) return;
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('Are you sure you want to delete your account? This cannot be undone!')) {
+      return;
+    }
 
     try {
-      const res = await fetch(
-        'https://farmart-backend-2-ot47.onrender.com/me',
-        {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await fetch('https://farmart-backend-2-ot47.onrender.com/me', {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data?.error || 'Delete failed');
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/auth');
         return;
       }
 
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.error || 'Delete failed');
+      }
+
       localStorage.clear();
-      alert('Account deleted. Redirecting...');
-      window.location.href = '/';
+      navigate('/auth');
     } catch (err) {
-      console.error(err);
-      setError('Something went wrong.');
+      setError(err.message);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-
+  if (loading) {
     return (
-    <div className="profile-page">
-      <h2>User Profile</h2>
+      <div className="user-profile-loading">
+        <div className="user-profile-spinner"></div>
+        <p>Loading your profile...</p>
+      </div>
+    );
+  }
 
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
+  return (
+    <div className="user-profile-container">
+      <h2 className="user-profile-header">Your Profile</h2>
 
-      <label>
-        Username:
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-      </label>
+      {error && <div className="user-profile-error">{error}</div>}
+      {success && <div className="user-profile-success">{success}</div>}
 
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </label>
+      <form onSubmit={handleUpdateProfile} className="user-profile-form">
+        <div className="user-profile-form-group">
+          <label className="user-profile-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className="user-profile-input"
+            required
+          />
+        </div>
 
-      <button onClick={handleUpdateProfile} className="update-button">
-        Update Profile
-      </button>
+        <div className="user-profile-form-group">
+          <label className="user-profile-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="user-profile-input"
+            required
+          />
+        </div>
 
-      <h3>Change Password</h3>
+        <button type="submit" className="user-profile-button" disabled={updating}>
+          {updating ? 'Updating...' : 'Update Profile'}
+        </button>
+      </form>
 
-      <label>
-        Current Password:
-        <input
-          type="password"
-          name="current_password"
-          value={formData.current_password}
-          onChange={handleChange}
-        />
-      </label>
+      <form onSubmit={handleUpdatePassword} className="user-profile-form">
+        <h3 className="user-profile-section-header">Change Password</h3>
 
-      <label>
-        New Password:
-        <input
-          type="password"
-          name="new_password"
-          value={formData.new_password}
-          onChange={handleChange}
-        />
-      </label>
+        <div className="user-profile-form-group">
+          <label className="user-profile-label">Current Password</label>
+          <input
+            type="password"
+            name="current_password"
+            value={formData.current_password}
+            onChange={handleChange}
+            className="user-profile-input"
+          />
+        </div>
 
-      <button onClick={handleUpdatePassword} className="password-button">
-        Update Password
-      </button>
+        <div className="user-profile-form-group">
+          <label className="user-profile-label">New Password</label>
+          <input
+            type="password"
+            name="new_password"
+            value={formData.new_password}
+            onChange={handleChange}
+            className="user-profile-input"
+          />
+        </div>
 
-      <hr />
+        <button type="submit" className="user-profile-button" disabled={updating}>
+          {updating ? 'Updating...' : 'Change Password'}
+        </button>
+      </form>
 
-      <button onClick={handleDelete} className="delete-button">
-        Delete Account
-      </button>
+      <div className="user-profile-danger-zone">
+        <h3 className="user-profile-section-header">Danger Zone</h3>
+        <button onClick={handleDeleteAccount} className="user-profile-delete-button">
+          Delete Account
+        </button>
+      </div>
     </div>
   );
 };

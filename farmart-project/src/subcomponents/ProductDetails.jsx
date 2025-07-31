@@ -7,7 +7,7 @@ const ProductDetail = () => {
   const navigate = useNavigate()
 
   const handleBackToList = () => {
-    navigate('/Menu')  
+    navigate('/animals')  
   }
 
   if (!product) { 

@@ -1,85 +1,40 @@
-import React, { useState } from 'react';
+// components/DeleteProducts.jsx
+import React from 'react';
 
 const DeleteProducts = ({ products, setproducts, setEditingProduct }) => {
-  const [deletingId, setDeletingId] = useState(null);
-
-  async function handleDelete(id) {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
-
-    const token = localStorage.getItem("adminToken");
-
-    if (!token) {
-      alert("Unauthorized. Admin token missing.");
-      return;
-    }
-
-    try {
-      setDeletingId(id);
-
-      const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Failed to delete from server');
-      }
-
-      const filtered = products.filter(product => String(product.id) !== String(id));
-      setproducts(filtered);
-    } catch (err) {
-      console.error('Error deleting product:', err);
-      alert('Delete failed: ' + err.message);
-    } finally {
-      setDeletingId(null);
-    }
-  }
+  const handleDelete = (id) => {
+    fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${id}`, {
+      method: 'DELETE',
+    })
+    .then(() => setproducts(prev => prev.filter(p => p.id !== id)));
+  };
 
   return (
-    <div className="admin-panel">
-      <h2 className="admin-title">Manage Products</h2>
-      {products.length === 0 ? (
-        <p className="no-products">No products available.</p>
-      ) : (
-        <table className="product-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th colSpan="2">Actions</th>
+    <div style={{ padding: '1rem' }}>
+      <h3>All Products</h3>
+      <table border="1" cellPadding="10" cellSpacing="0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map(prod => (
+            <tr key={prod.id}>
+              <td>{prod.name}</td>
+              <td>{prod.price}</td>
+              <td><img src={prod.image} alt={prod.name} width="60" /></td>
+              <td>
+                <button onClick={() => setEditingProduct(prod)}>Edit</button>
+                <button onClick={() => handleDelete(prod.id)}>Delete</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {products.map(product => (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>
-                  <button
-                    className="edit-button"
-                    onClick={() => setEditingProduct(product)}
-                  >
-                    ✏️ Edit
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDelete(product.id)}
-                    disabled={deletingId === product.id}
-                  >
-                    {deletingId === product.id ? 'Deleting...' : '🗑️ Delete'}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
