@@ -6,10 +6,12 @@ const AuthRequired = () => {
 
   return (
     <div className="auth-required-container">
-      <h2 className="auth-required-heading">You must be logged in to view this page.</h2>
+      <h2 className="auth-required-heading">
+        You must be logged in to view this page.
+      </h2>
       <button
         className="auth-required-button"
-        onClick={() => navigate('/user-auth')}
+        onClick={() => navigate('/auth')}
       >
         Go to Login / Register
       </button>

@@ -1,115 +1,56 @@
+// components/EditProducts.jsx
 import React, { useState, useEffect } from 'react';
 
-const EditProduct = ({ editingProduct, setEditingProduct, setproducts }) => {
+const EditProducts = ({ editingProduct, setEditingProduct, setproducts }) => {
   const [formData, setFormData] = useState({
     name: '',
     price: '',
-    category: '',
-    description: '',
-    image_url: ''
+    image: '',
   });
 
   useEffect(() => {
     if (editingProduct) {
       setFormData({
-        name: editingProduct.name || '',
-        price: editingProduct.price || '',
-        category: editingProduct.category || '',
-        description: editingProduct.description || '',
-        image_url: editingProduct.image_url || ''
+        name: editingProduct.name,
+        price: editingProduct.price,
+        image: editingProduct.image,
       });
     }
   }, [editingProduct]);
 
-  if (!editingProduct) return null;
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const token = localStorage.getItem("adminToken");
-
-    if (!token) {
-      alert("Unauthorized. Admin token missing.");
-      return;
-    }
-
-    const updatedData = {
-      ...formData,
-      price: parseFloat(formData.price)
-    };
-
-    try {
-      const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${editingProduct.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(updatedData)
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to update');
-
-      alert('Product updated!');
+    fetch(`https://farmart-backend-2-ot47.onrender.com/animals/${editingProduct.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+    .then(res => res.json())
+    .then(updatedAnimal => {
       setproducts(prev =>
-        prev.map(p => (p.id === editingProduct.id ? data : p))
+        prev.map(p => (p.id === updatedAnimal.id ? updatedAnimal : p))
       );
       setEditingProduct(null);
-    } catch (err) {
-      alert(`Error: ${err.message}`);
-    }
+    });
   };
 
+  if (!editingProduct) return null;
+
   return (
-    <div className="edit-form">
+    <form onSubmit={handleSubmit} style={{ padding: '1rem', background: '#f9f9f9', marginTop: '1rem' }}>
       <h3>Edit Product</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Name"
-          required
-        />
-        <input
-          name="price"
-          type="number"
-          step="0.01"
-          value={formData.price}
-          onChange={handleChange}
-          placeholder="Price"
-          required
-        />
-        <input
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          placeholder="Category"
-        />
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Description"
-        />
-        <input
-          name="image_url"
-          type="url"
-          value={formData.image_url}
-          onChange={handleChange}
-          placeholder="Image URL"
-        />
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => setEditingProduct(null)}>Cancel</button>
-      </form>
-    </div>
+      <input name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
+      <input name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
+      <input name="image" value={formData.image} onChange={handleChange} placeholder="Image URL" required />
+      <button type="submit">Update</button>
+    </form>
   );
 };
 
-export default EditProduct;
+export default EditProducts;

@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Productcard from '../subcomponents/Productcard';
 import FilterOption from '../subcomponents/FilterOption';
 
-const FilterExchange = ({ products }) => {
+const FilterExchange = () => {
+  const [products, setProducts] = useState([]); // 🔁 NEW: fetch real products
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [showSidebar, setShowSidebar] = useState(false);
   const [showCart, setshowCart] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [cartItems, setcartItems] = useState([]);
+
+  // 🔁 NEW: Fetch products from backend
+  useEffect(() => {
+    fetch('https://farmart-backend-2-ot47.onrender.com/animals')
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch products");
+        return res.json();
+      })
+      .then(data => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const addToCart = (product) => {
     setcartItems(prevItems => {
@@ -56,7 +77,7 @@ const FilterExchange = ({ products }) => {
     );
   };
 
-    const placeOrder = async () => {
+  const placeOrder = async () => {
     const token = localStorage.getItem('userToken') || localStorage.getItem('adminToken');
     if (!token) {
       alert("You must be logged in to place an order.");
@@ -64,7 +85,6 @@ const FilterExchange = ({ products }) => {
     }
 
     try {
-      
       const orderRes = await fetch('https://farmart-backend-2-ot47.onrender.com/orders', {
         method: 'POST',
         headers: {
@@ -75,16 +95,15 @@ const FilterExchange = ({ products }) => {
       const newOrder = await orderRes.json();
       if (!orderRes.ok) throw new Error(newOrder.error || 'Failed to create order');
 
-      
       for (const item of cartItems) {
-        const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/orders/${id}`, {
+        const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/orders/${newOrder.id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-            food_item_id: item.id,
+            animal_id: item.id,
             quantity: item.quantity
           })
         });
@@ -103,67 +122,73 @@ const FilterExchange = ({ products }) => {
     }
   };
 
-  const categories = [...new Set(products.map(p => p.category))];
+  const categories = [...new Set(products.map(p => p.category || p.type))]; // fallback to 'type'
 
   const filteredProducts = selectedCategories.length === 0
     ? products
     : products.filter(product =>
-        selectedCategories.includes(product.category)
+        selectedCategories.includes(product.category || product.type)
       );
 
-     return (
+  return (
     <div className="filter-exchange">
       <FilterOption toggleSidebar={toggleSidebar} toggleCart={toggleCart} cartItemCount={cartItems.length} />
 
+      {loading && <p>Loading products...</p>}
+      {error && <p>Error: {error}</p>}
 
-      <div className={`sidecart ${showCart ? 'showcart' : 'hidecart'}`}>
-        <h3>Your Cart ({cartItems.length})</h3>
-        {cartItems.length === 0 ? (
-          <p>Your cart is empty</p>
-        ) : (
-          <>
-            <div className="cart-items">
-              {cartItems.map(item => (
-                <div key={item.id} className="cart-item">
-                  <img src={item.image_url} alt={item.name} />
-                  <div className="item-details">
-                    <h4>{item.name}</h4>
-                    <p><strong>${(item.price * item.quantity).toFixed(2)}</strong></p>
-                    <div className="quantity-controls">
-                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+      {!loading && !error && (
+        <>
+          <div className={`sidecart ${showCart ? 'showcart' : 'hidecart'}`}>
+            <h3>Your Cart ({cartItems.length})</h3>
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty</p>
+            ) : (
+              <>
+                <div className="cart-items">
+                  {cartItems.map(item => (
+                    <div key={item.id} className="cart-item">
+                      <img src={item.image_url} alt={item.name} />
+                      <div className="item-details">
+                        <h4>{item.name}</h4>
+                        <p><strong>${(item.price * item.quantity).toFixed(2)}</strong></p>
+                        <div className="quantity-controls">
+                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                          <span>{item.quantity}</span>
+                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                        </div>
+                        <button onClick={() => removeFromCart(item.id)}>Remove</button>
+                      </div>
                     </div>
-                    <button onClick={() => removeFromCart(item.id)}>Remove</button>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="cart-total">
-              <h4>Total: ${cartTotal.toFixed(2)}</h4>
-              <button className="checkout-btn" onClick={placeOrder}>Place Order</button>
-            </div>
-          </>
-        )}
-        <button className="sidebtn" onClick={toggleCart}>Close</button>
-      </div>
+                <div className="cart-total">
+                  <h4>Total: ${cartTotal.toFixed(2)}</h4>
+                  <button className="checkout-btn" onClick={placeOrder}>Place Order</button>
+                </div>
+              </>
+            )}
+            <button className="sidebtn" onClick={toggleCart}>Close</button>
+          </div>
 
-      <div className={`sidebar ${showSidebar ? 'show' : 'hide'}`}>
-        <h3>Filter by Category</h3>
-        {categories.map((category, id) => (
-          <label key={id}>
-            <input
-              type="checkbox"
-              checked={selectedCategories.includes(category)}
-              onChange={() => handleCategoryChange(category)}
-            />
-            {category}
-          </label>
-        ))}
-        <button className="sidebtn" onClick={toggleSidebar}>Close</button>
-      </div>
+          <div className={`sidebar ${showSidebar ? 'show' : 'hide'}`}>
+            <h3>Filter by Category</h3>
+            {categories.map((category, id) => (
+              <label key={id}>
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category)}
+                  onChange={() => handleCategoryChange(category)}
+                />
+                {category}
+              </label>
+            ))}
+            <button className="sidebtn" onClick={toggleSidebar}>Close</button>
+          </div>
 
-      <Productcard products={filteredProducts} addToCart={addToCart} />
+          <Productcard products={filteredProducts} addToCart={addToCart} />
+        </>
+      )}
     </div>
   );
 };

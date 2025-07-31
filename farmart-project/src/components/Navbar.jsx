@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import Logo from '../assets/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGear, faBagShopping, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +19,7 @@ const NavBar = () => {
     
     <div className="navbar">
   <div className="navbar-left">
-    <img src={logo} alt="Farmart logo" className="logo" />
+    <img src={Logo} alt="Farmart logo" className="logo" />
   </div>
 
   <div className="navbar-right">

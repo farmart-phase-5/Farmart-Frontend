@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from 'react-router-dom';
 
 import Home from './components/Home';
 import About from './components/About';
@@ -15,29 +19,23 @@ import UserProfile from './components/UserProfile';
 import OrdersPage from './components/OrdersPage';
 import Products from './subcomponents/Products';
 import ForgotPassword from './components/ForgetPassword';
+import EditProducts from './components/EditProducts';
 
 function App() {
-  const [products, setproducts] = useState([]);
-  const [auth, setAuth] = useState(null);
+  const [products, setProducts] = useState([]);
+
+  const AuthRequiredWrapper = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const role = searchParams.get('role') || 'user';
+  return <AuthRequired role={role} />;
+};
+
 
   useEffect(() => {
-    fetch('https://farmart-backened.onrender.com/animals')
-      .then(res => res.json())
-      .then(data => setproducts(data));
-  }, []);
-
-  useEffect(() => {
-    const userToken = localStorage.getItem('userToken');
-    const userInfo = localStorage.getItem('userInfo');
-
-    const adminToken = localStorage.getItem('adminToken');
-    const adminInfo = localStorage.getItem('adminInfo');
-
-    if (adminToken && adminInfo) {
-      setAuth({ token: adminToken, user: JSON.parse(adminInfo) });
-    } else if (userToken && userInfo) {
-      setAuth({ token: userToken, user: JSON.parse(userInfo) });
-    }
+    fetch('https://farmart-backend-2-ot47.onrender.com/animals')
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error('Failed to fetch products:', err));
   }, []);
 
   const router = createBrowserRouter([
@@ -48,42 +46,65 @@ function App() {
         { index: true, element: <Home /> },
         { path: 'about', element: <About /> },
         { path: 'contact', element: <Contact /> },
-        { path: 'products', element: <Products products={products} /> },
-        { path: 'product/:id', element: <ProtectedRoute><ProductDetail /></ProtectedRoute> },
-        { path: 'profile', element: <ProtectedRoute><UserProfile /></ProtectedRoute> },
-
-        // Shared user/admin auth
-        { path: 'auth', element: <CombineAuth /> },
-        { path: 'login', element: <Navigate to="/auth" replace /> },
-        { path: 'register', element: <Navigate to="/auth" replace /> },
-        { path: 'forgot-password', element: <ForgotPassword /> },
-        { path: 'auth-required', element: <AuthRequired /> },
-
-        // Admin page only (guarded)
         {
-          path: 'admin',
-          element: (
-            <ProtectedRoute allowedRoles={['admin']}>
-              <Admin products={products} setproducts={setproducts} />
-            </ProtectedRoute>
-          )
+          path: 'products',
+          element: products.length ? (
+            <Products products={products} />
+          ) : (
+            <p>Loading products...</p>
+          ),
         },
-
-        // Orders page for regular users
+        {
+          path: 'product/:id',
+          element: (
+            <ProtectedRoute allowedRoles={['user', 'admin']}>
+              <ProductDetail />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'profile',
+          element: (
+            <ProtectedRoute allowedRoles={['user', 'admin']}>
+              <UserProfile />
+            </ProtectedRoute>
+          ),
+        },
         {
           path: 'orders',
           element: (
             <ProtectedRoute allowedRoles={['user']}>
               <OrdersPage />
             </ProtectedRoute>
-          )
+          ),
         },
+        {
+          path: 'admin',
+          element: (
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Admin products={products} setProducts={setProducts} />
+            </ProtectedRoute>
+          ),
+        },
+{
+  path: 'edit-product/:id',
+  element: (
+    <ProtectedRoute allowedRoles={['admin']}>
+      <EditProducts />
+    </ProtectedRoute>
+  ),
+},
+        { path: 'auth', element: <CombineAuth /> },
+        { path: 'login', element: <Navigate to="/auth" replace /> },
+        { path: 'register', element: <Navigate to="/auth" replace /> },
+        { path: 'forgot-password', element: <ForgotPassword /> },
+        {
+  path: 'auth-required',
+  element: <AuthRequiredWrapper />,
+}
       ],
     },
-    {
-      path: '*',
-      element: <Errorlink />
-    }
+    { path: '*', element: <Errorlink /> },
   ]);
 
   return <RouterProvider router={router} />;
