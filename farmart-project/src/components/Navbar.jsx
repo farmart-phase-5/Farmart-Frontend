@@ -24,7 +24,7 @@ const NavBar = () => {
 
   <div className="navbar-right">
     <div className="sidebtn">
-      <button className="userbtn" onClick={() => navigate('/Admin')}>
+      <button className="userbtn" onClick={() => navigate('/admin')}>
         <FontAwesomeIcon icon={faUserCircle} />
       </button>
       <button className="shopbag" onClick={() => navigate('/orders')}>

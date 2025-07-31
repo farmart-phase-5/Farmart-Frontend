@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const res = await fetch('https://farmart-backened.onrender.com/api/auth/user/forgot-password', {
+      const res = await fetch('https://farmart-backend-2-ot47.onrender.com/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

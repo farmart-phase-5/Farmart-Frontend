@@ -37,7 +37,7 @@ const AddProducts = ({ products }) => {
     };
 
     try {
-      const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/food', {
+      const res = await fetch('https://farmart-backend-2-ot47.onrender.com/animals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,6 @@ const AddProducts = ({ products }) => {
       alert('Product added successfully!');
       console.log('Product added:', data);
 
-      // Clear form
       setFormData({
         productName: '',
         productPrice: '',
