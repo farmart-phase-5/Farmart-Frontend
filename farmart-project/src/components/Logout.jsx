@@ -13,7 +13,7 @@ const Logout = () => {
     }
 
     try {
-      const res = await fetch('https://brom-e-commerce-backend.onrender.com/api/auth/logout', {
+      const res = await fetch('https://farmart-backend-2-ot47.onrender.com/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

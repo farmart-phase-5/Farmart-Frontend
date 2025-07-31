@@ -1,15 +1,14 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-  const userToken = localStorage.getItem('userToken');
+const ProtectedRoute = ({ allowedRoles = ['user', 'admin'], children }) => {
   const adminToken = localStorage.getItem('adminToken');
+  const userToken = localStorage.getItem('userToken');
 
-  if (!userToken && !adminToken) {
-    return <Navigate to="/auth-required" replace />;
-  }
+  if (allowedRoles.includes('admin') && adminToken) return children;
+  if (allowedRoles.includes('user') && userToken) return children;
 
-  return children;
+  return <Navigate to="/auth-required" replace />;
 };
 
 export default ProtectedRoute;

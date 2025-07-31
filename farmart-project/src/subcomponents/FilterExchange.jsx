@@ -77,7 +77,7 @@ const FilterExchange = ({ products }) => {
 
       
       for (const item of cartItems) {
-        const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/orders/${newOrder.id}/items`, {
+        const res = await fetch(`https://farmart-backend-2-ot47.onrender.com/orders/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
