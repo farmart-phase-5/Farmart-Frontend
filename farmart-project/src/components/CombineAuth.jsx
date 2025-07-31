@@ -70,33 +70,52 @@ const CombineAuth = () => {
     return true;
   };
 
-  const handleAuthSuccess = (responseData) => {
-    const token = responseData.access_token || responseData.token;
-    const userData = responseData.user || {
-      email: formData.email,
-      username: formData.username,
-      role: responseData.role || role
-    };
-
-    if (!token) {
-      throw new Error('Authentication token not received');
-    }
-
-    
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-    
-    const expiresIn = responseData.expires_in || 24 * 60 * 60 * 1000;
-    const expirationDate = new Date().getTime() + expiresIn;
-    sessionStorage.setItem('tokenExpiration', expirationDate.toString());
-
-    
-    if (userData.role === 'admin') {
-      navigate('/products');
-    } else {
-      navigate('/user/products');
-    }
+  
+const handleLoginSuccess = (data) => {
+  const token = data.access_token || data.token;
+  const user = data.user || {
+    username: data.username,
+    email: data.email,
+    role: data.role,
   };
+
+  localStorage.setItem('token', token);
+  localStorage.setItem('user', JSON.stringify(user));
+  setUser(user);
+  navigate(user.role === 'admin' ? '/admin' : '/profile');
+};
+
+
+  const handleAuthSuccess = (responseData) => {
+  const token = responseData.access_token || responseData.token;
+  const userData = responseData.user || {
+    email: formData.email,
+    username: formData.username,
+    role: responseData.role || role
+  };
+
+  if (!token) {
+    throw new Error('Authentication token not received');
+  }
+
+
+  localStorage.setItem('token', token);
+  localStorage.setItem('userData', JSON.stringify(userData));
+  localStorage.setItem("tokenExpiration", Date.now() + 60 * 60 * 1000);
+
+  
+  const expiresIn = responseData.expires_in || 24 * 60 * 60 * 1000; 
+  const expirationDate = new Date().getTime() + expiresIn;
+  localStorage.setItem('tokenExpiration', expirationDate.toString());
+
+  
+  if (userData.role === 'admin') {
+    navigate('/admin');
+  } else {
+    navigate('/profile');
+  }
+};
+
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -106,7 +125,7 @@ const CombineAuth = () => {
   setError('');
 
   try {
-    const endpoint = isLogin ? '/auth/login' : '/auth/register';
+    const endpoint = isLogin ? '/auth/login' : '/register';
     const payload = isLogin
       ? { email: formData.email, password: formData.password }
       : {
