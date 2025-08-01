@@ -15,7 +15,9 @@ const Products = ({ products }) => {
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <p><strong>Price:</strong> KES {product.price}</p>
-              <Link to={`/product/${product.id}`}>View Details</Link>
+              <Link to={`/product/${product.id}`} state={{ product }}>
+                View Details
+              </Link>
             </div>
           ))
         )}
