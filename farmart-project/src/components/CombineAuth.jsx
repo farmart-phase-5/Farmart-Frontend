@@ -71,45 +71,19 @@ const CombineAuth = () => {
   };
 
   
-const handleLoginSuccess = (data) => {
-  const token = data.access_token || data.token;
-  const user = data.user || {
-    username: data.username,
-    email: data.email,
-    role: data.role,
-  };
-
-  localStorage.setItem('token', token);
-  localStorage.setItem('user', JSON.stringify(user));
-  setUser(user);
-  navigate(user.role === 'admin' ? '/admin' : '/profile');
-};
-
-
-  const handleAuthSuccess = (responseData) => {
+const handleAuthSuccess = (responseData) => {
   const token = responseData.access_token || responseData.token;
-  const userData = responseData.user || {
-    email: formData.email,
-    username: formData.username,
-    role: responseData.role || role
-  };
 
   if (!token) {
     throw new Error('Authentication token not received');
   }
 
-
+  // Save only the access token
   localStorage.setItem('token', token);
-  localStorage.setItem('userData', JSON.stringify(userData));
-  localStorage.setItem("tokenExpiration", Date.now() + 60 * 60 * 1000);
 
-  
-  const expiresIn = responseData.expires_in || 24 * 60 * 60 * 1000; 
-  const expirationDate = new Date().getTime() + expiresIn;
-  localStorage.setItem('tokenExpiration', expirationDate.toString());
-
-  
-  if (userData.role === 'admin') {
+  // Navigate based on role if available, else default to profile
+  const role = responseData.user?.role || responseData.role || role;
+  if (role === 'admin') {
     navigate('/admin');
   } else {
     navigate('/profile');
