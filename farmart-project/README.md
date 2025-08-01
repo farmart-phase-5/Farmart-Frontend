@@ -22,20 +22,20 @@ A responsive, token-authenticated React frontend for **Farmart**, a fictional li
 
 ## 🔗 Live Demo & Repository
 
-- 🔴 Live site: **[Farmart Live](https://your-live-site-link.com)**  
-- 📁 Repository: [Farmart Frontend](https://github.com/your-repo-link)
+- 🔴 Live site: **[Farmart Live](https://farmart-frontend-6fhz.onrender.com/)**  
+- 📁 Repository: [Farmart Frontend](https://github.com/farmart-phase-5/Farmart-Frontend)
 
 ---
 
 ## ⚙️ Setup & Installation
 
-### Pre-Requisites
+### 📋 Pre-Requisites
 
 - Node.js (v18 or higher)  
 - npm (v9 or higher)  
 - Internet connection  
 
-### Installation Steps
+### 🛠️ Installation Steps
 
 ```bash
 # Clone the repo
@@ -49,6 +49,7 @@ npm install
 
 # Start the development server
 npm run dev
+Open your browser at http://localhost:5173
 
 🧭 Navigation & Routing Overview
 Route	Description	Access
@@ -136,14 +137,14 @@ Farmart is fully responsive and optimized for:
 
 👥 Authors
 
-Brian Njuguna
-
 Nevil Oporo
 
-Contributing
+Brian Njuguna
+
+🤝 Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
- License
+📝 License
 This project is open-source and available under the MIT License.
 
 yaml
@@ -154,4 +155,3 @@ Edit
 
 Just create a new file called `README.md` in your frontend project root folder and paste this whole content inside.
 
-If you want, I can help you add badges or screenshots next!
