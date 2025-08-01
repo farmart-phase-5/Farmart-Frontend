@@ -78,10 +78,10 @@ const handleAuthSuccess = (responseData) => {
     throw new Error('Authentication token not received');
   }
 
-  // Save only the access token
+  
   localStorage.setItem('token', token);
 
-  // Navigate based on role if available, else default to profile
+  
   const role = responseData.user?.role || responseData.role || role;
   if (role === 'admin') {
     navigate('/admin');

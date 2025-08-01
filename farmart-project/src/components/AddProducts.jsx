@@ -4,9 +4,10 @@ const AddProducts = ({ products }) => {
   const [formData, setFormData] = useState({
     productName: '',
     productPrice: '',
-    productCategory: '',
+    productType: '',
     productDescription: '',
-    productImage: ''
+    productImage: '',
+    productBreed: ''
   });
 
   const handleChange = (e) => {
@@ -17,7 +18,7 @@ const AddProducts = ({ products }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("token");
     if (!token) {
       alert("Unauthorized. Admin token missing.");
       return;
@@ -31,7 +32,8 @@ const AddProducts = ({ products }) => {
     const productData = {
       name: formData.productName,
       price: parseFloat(formData.productPrice),
-      category: formData.productCategory,
+      type: formData.productType,
+      breed: formData.productBreed,
       description: formData.productDescription,
       image_url: formData.productImage
     };
@@ -58,8 +60,9 @@ const AddProducts = ({ products }) => {
       setFormData({
         productName: '',
         productPrice: '',
-        productCategory: '',
+        productType: '',
         productDescription: '',
+        productBreed: '',
         productImage: ''
       });
     } catch (error) {
@@ -92,12 +95,22 @@ const AddProducts = ({ products }) => {
           required
         />
 
-        <label htmlFor="productCategory">Product Category:</label>
+        <label htmlFor="productType">Product Type:</label>
         <input
           type="text"
-          id="productCategory"
-          name="productCategory"
-          value={formData.productCategory}
+          id="productType"
+          name="productType"
+          value={formData.productType}
+          onChange={handleChange}
+          required
+        />
+
+        <label htmlFor="productBreed">Product Breed:</label>
+        <input
+          type="text"
+          id="productBreed"
+          name="productBreed"
+          value={formData.productBreed}
           onChange={handleChange}
           required
         />
