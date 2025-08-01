@@ -1,5 +1,4 @@
-// src/components/ProtectedRoute.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
@@ -11,6 +10,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   // Token exists, allow access
+
   return children;
 };
 
